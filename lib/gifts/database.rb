@@ -1,5 +1,7 @@
 module Gifts
   class Database
+    attr_reader :repos, :commits
+
     def self.open(filename)
       if File.exist?(filename)
         database = Groonga::Database.open(filename)
@@ -23,8 +25,8 @@ module Gifts
 
     def initialize(database)
       @database = database
-      @repositories = nil
-      @commits = nil
+      @repos = RepositoryTable.new(self)
+      @commits = CommitTable.new(self)
     end
 
     def close
@@ -36,14 +38,6 @@ module Gifts
 
     def closed?
       @database.nil? or @database.closed?
-    end
-
-    def repositories
-      @repositories ||= RepositoryTable.new(self)
-    end
-
-    def commits
-      @commits ||= CommitTable.new(self)
     end
   end
 end

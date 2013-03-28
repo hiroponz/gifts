@@ -1,10 +1,12 @@
 module Gifts
-  class TableBase < SimpleDelegator
-    attr_reader :db
+  class TableBase
+    extend Forwardable
+
+    def_delegators :@table, :records, :size
 
     def initialize(database)
       @db = database
-      super(Groonga[table_name])
+      @table = Groonga[table_name]
       define_schema
     end
   end

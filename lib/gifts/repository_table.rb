@@ -1,11 +1,7 @@
 module Gifts
   class RepositoryTable < TableBase
-    def initialize(database)
-      super(database)
-    end
-
     def table_name
-      "repositories"
+      "repo"
     end
 
     def define_schema
@@ -17,8 +13,11 @@ module Gifts
     end
 
     def add(path)
-      repo = Repo.new(path)
-      self[path] || super(path)
+      git_repo = Repo.new(path)
+
+      db_repo = @table[path] || @table.add(path, path: path)
+
+      @db.commits.add(git_repo, db_repo)
     end
 
     def remove(path)
