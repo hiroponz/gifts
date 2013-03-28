@@ -10,12 +10,21 @@ module Gifts
       end
     end
 
-    def initialize
+    def initialize(database)
+      @database = database
       @table = Groonga[TableName]
     end
 
     def size
       @table.size
+    end
+
+    def add(path)
+      repo = Repo.new(path)
+      @table[path] || @table.add(path)
+    end
+
+    def remove(path)
     end
   end
 end

@@ -41,11 +41,11 @@ module Gifts
     end
 
     def repositories
-      @repositories ||= RepositoryTable.new
+      @repositories ||= RepositoryTable.new(self)
     end
 
     def commits
-      @commits ||= CommitTable.new
+      @commits ||= CommitTable.new(self)
     end
 
     private

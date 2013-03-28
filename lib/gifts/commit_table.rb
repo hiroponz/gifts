@@ -11,7 +11,8 @@ module Gifts
       end
     end
 
-    def initialize
+    def initialize(database)
+      @database = database
       @table = Groonga[TableName]
     end
 
