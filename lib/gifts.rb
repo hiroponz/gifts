@@ -1,5 +1,6 @@
 require "groonga"
-require "rugged"
+require "grit"
+require "grit_ext"
 require 'fileutils'
 
 require "gifts/version"

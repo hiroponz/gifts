@@ -18,7 +18,8 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_dependency "rroonga"
-  gem.add_dependency "rugged"
+  gem.add_dependency "gitlab-grit"
+  gem.add_dependency "grit_ext"
 
   gem.add_development_dependency "rspec"
   gem.add_development_dependency "pry"
