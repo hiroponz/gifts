@@ -25,8 +25,6 @@ module Gifts
       @database = database
       @repositories = nil
       @commits = nil
-
-      define_schema
     end
 
     def close
@@ -46,12 +44,6 @@ module Gifts
 
     def commits
       @commits ||= CommitTable.new(self)
-    end
-
-    private
-    def define_schema
-      RepositoryTable.define_schema
-      CommitTable.define_schema
     end
   end
 end

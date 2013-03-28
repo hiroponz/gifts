@@ -1,27 +1,24 @@
 module Gifts
-  class RepositoryTable
-    TableName = "repositories"
+  class RepositoryTable < TableBase
+    def initialize(database)
+      super(database)
+    end
 
-    def self.define_schema
+    def table_name
+      "repositories"
+    end
+
+    def define_schema
       Groonga::Schema.define do |schema|
-        schema.create_table(TableName, :type => :hash) do |table|
+        schema.create_table(table_name, :type => :hash) do |table|
           table.string("path")
         end
       end
     end
 
-    def initialize(database)
-      @database = database
-      @table = Groonga[TableName]
-    end
-
-    def size
-      @table.size
-    end
-
     def add(path)
       repo = Repo.new(path)
-      @table[path] || @table.add(path)
+      self[path] || super(path)
     end
 
     def remove(path)
