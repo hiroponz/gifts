@@ -2,7 +2,7 @@ module Gifts
   class TableBase
     extend Forwardable
 
-    def_delegators :table, :records, :size
+    def_delegators :table, :count, :records, :size
 
     def initialize(database)
       @db = database
