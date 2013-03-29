@@ -33,6 +33,8 @@ module Gifts
         key = db_commit.id.to_s + ":" + db_file.id.to_s
         table[key] || table.add(key, commit: db_commit.key, file: db_file.key, diff: diff_content(git_diff.diff))
       end
+    rescue Grit::Git::GitTimeout => e
+      puts "Timeout commit:#{git_commit.id}"
     end
 
     def diff_content(diff)
