@@ -14,6 +14,7 @@ module Gifts
           table.reference("repo")
           table.string("rev")
           table.int32("status")
+          table.time("committed_date")
         end
       end
     end
@@ -21,7 +22,7 @@ module Gifts
     def add(git_repo, db_repo)
       git_repo.find_each do |git_commit|
         key = db_repo.id.to_s + ":" + git_commit.id
-        db_commit = table[key] || table.add(key, repo: db_repo.key, rev: git_commit.id, status: StatusProcessing)
+        db_commit = table[key] || table.add(key, repo: db_repo.key, rev: git_commit.id, status: StatusProcessing, committed_date: git_commit.committed_date)
 
         @db.diffs.add(git_commit, db_commit)
       end
