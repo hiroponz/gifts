@@ -17,7 +17,7 @@ module Gifts
       git_repo.find_each do |git_commit|
         key = db_repo.id.to_s + ":" + git_commit.id
 
-        db_commit = @table[key] || @table.add(key, repo: db_repo.key, rev: git_commit.id)
+        db_commit = table[key] || table.add(key, repo: db_repo.key, rev: git_commit.id)
       end
     end
   end
