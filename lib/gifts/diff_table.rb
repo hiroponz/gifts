@@ -15,6 +15,8 @@ module Gifts
     end
 
     def add(git_commit, db_commit)
+      return if db_commit.status != CommitTable::StatusProcessing
+
       git_commit.diffs.each do |git_diff|
         next if git_diff.diff.empty?
 
@@ -35,6 +37,9 @@ module Gifts
       end
     rescue Grit::Git::GitTimeout => e
       puts "Timeout commit:#{git_commit.id}"
+      db_commit.status = CommitTable::StatusTimeout
+    else
+      db_commit.status = CommitTable::StatusCompleted
     end
 
     def diff_content(diff)
