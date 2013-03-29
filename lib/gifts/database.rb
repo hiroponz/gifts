@@ -1,6 +1,6 @@
 module Gifts
   class Database
-    attr_reader :repos, :commits
+    attr_reader :repos, :commits, :files, :diffs
 
     def self.open(filename)
       if File.exist?(filename)
@@ -27,6 +27,8 @@ module Gifts
       @database = database
       @repos = RepositoryTable.new(self)
       @commits = CommitTable.new(self)
+      @files = FileTable.new(self)
+      @diffs = DiffTable.new(self)
     end
 
     def close

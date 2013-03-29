@@ -18,6 +18,8 @@ module Gifts
         key = db_repo.id.to_s + ":" + git_commit.id
 
         db_commit = table[key] || table.add(key, repo: db_repo.key, rev: git_commit.id)
+
+        @db.diffs.add(git_commit, db_commit)
       end
     end
   end
