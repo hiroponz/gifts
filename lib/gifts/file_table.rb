@@ -10,11 +10,12 @@ module Gifts
     def define_schema
       Groonga::Schema.define do |schema|
         schema.create_table(table_name, type: :hash) do |table|
-          table.reference("repo")
+          table.string("encoding")
+          table.string("ext")
           table.reference("last_commit", "commit")
           table.string("path")
+          table.reference("repo")
           table.int32("type")
-          table.string("encoding")
         end
       end
     end
@@ -31,7 +32,9 @@ module Gifts
       key = db_commit.repo.id.to_s + ":" + path
       return if table[key] && table[key].last_commit.committed_date > db_commit.committed_date
 
-      t =  table[key] || table.add(key, repo: db_commit.repo.key, path: path)
+      ext = File.extname(path).sub(".", "")
+
+      t =  table[key] || table.add(key, repo: db_commit.repo.key, path: path, ext: ext)
       t.last_commit = db_commit.key
 
       detection = CharlockHolmes::EncodingDetector.detect(file.data)

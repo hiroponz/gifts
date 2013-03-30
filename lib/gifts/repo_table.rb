@@ -20,8 +20,5 @@ module Gifts
 
       @db.commits.add(git_repo, db_repo)
     end
-
-    def remove(path)
-    end
   end
 end

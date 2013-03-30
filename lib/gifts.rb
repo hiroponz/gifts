@@ -14,6 +14,7 @@ require "gifts/commit_table"
 require "gifts/file_table"
 require "gifts/diff_table"
 require "gifts/term_table"
+require "gifts/user_table"
 require "gifts/repo"
 
 module Gifts

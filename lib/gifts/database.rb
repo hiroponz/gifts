@@ -1,6 +1,6 @@
 module Gifts
   class Database
-    attr_reader :repos, :commits, :files, :diffs, :terms
+    attr_reader :repos, :commits, :files, :diffs, :terms, :users
 
     def self.open(filename)
       if File.exist?(filename)
@@ -25,7 +25,10 @@ module Gifts
 
     def initialize(database)
       @database = database
+
+      # Tables need initialized in the order corresponding to referenced.
       @repos = RepoTable.new(self)
+      @users = UserTable.new(self)
       @commits = CommitTable.new(self)
       @files = FileTable.new(self)
       @diffs = DiffTable.new(self)
