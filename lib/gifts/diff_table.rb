@@ -6,7 +6,7 @@ module Gifts
 
     def define_schema
       Groonga::Schema.define do |schema|
-        schema.create_table(table_name, :type => :hash) do |table|
+        schema.create_table(table_name, type: :hash) do |table|
           table.reference("commit")
           table.reference("file")
           table.text("diff")
