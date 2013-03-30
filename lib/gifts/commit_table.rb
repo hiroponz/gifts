@@ -10,7 +10,7 @@ module Gifts
 
     def define_schema
       Groonga::Schema.define do |schema|
-        schema.create_table(table_name, :type => :hash) do |table|
+        schema.create_table(table_name, type: :hash) do |table|
           table.reference("repo")
           table.string("rev")
           table.int32("status")

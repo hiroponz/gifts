@@ -25,7 +25,7 @@ module Gifts
 
     def initialize(database)
       @database = database
-      @repos = RepositoryTable.new(self)
+      @repos = RepoTable.new(self)
       @commits = CommitTable.new(self)
       @files = FileTable.new(self)
       @diffs = DiffTable.new(self)

@@ -1,12 +1,12 @@
 module Gifts
-  class RepositoryTable < TableBase
+  class RepoTable < TableBase
     def table_name
       "repo"
     end
 
     def define_schema
       Groonga::Schema.define do |schema|
-        schema.create_table(table_name, :type => :hash) do |table|
+        schema.create_table(table_name, type: :hash) do |table|
           table.string("path")
         end
       end
