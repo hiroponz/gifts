@@ -1,4 +1,4 @@
-require 'grit/git-ruby/repository'
+require 'gifts/grit/git-ruby/repository'
 
 module Gifts::Grit
 

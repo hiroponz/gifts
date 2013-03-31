@@ -23,28 +23,28 @@ rescue LoadError
 end
 
 # ruby 1.9 compatibility
-require 'grit/ruby1.9'
+require 'gifts/grit/ruby1.9'
 
 # internal requires
-require 'grit/lazy'
-require 'grit/errors'
-require 'grit/git-ruby'
-require 'grit/git' unless defined? Gifts::Grit::Git
-require 'grit/ref'
-require 'grit/tag'
-require 'grit/commit'
-require 'grit/commit_stats'
-require 'grit/tree'
-require 'grit/blob'
-require 'grit/actor'
-require 'grit/diff'
-require 'grit/config'
-require 'grit/repo'
-require 'grit/index'
-require 'grit/status'
-require 'grit/submodule'
-require 'grit/blame'
-require 'grit/merge'
+require 'gifts/grit/lazy'
+require 'gifts/grit/errors'
+require 'gifts/grit/git-ruby'
+require 'gifts/grit/git' unless defined? Gifts::Grit::Git
+require 'gifts/grit/ref'
+require 'gifts/grit/tag'
+require 'gifts/grit/commit'
+require 'gifts/grit/commit_stats'
+require 'gifts/grit/tree'
+require 'gifts/grit/blob'
+require 'gifts/grit/actor'
+require 'gifts/grit/diff'
+require 'gifts/grit/config'
+require 'gifts/grit/repo'
+require 'gifts/grit/index'
+require 'gifts/grit/status'
+require 'gifts/grit/submodule'
+require 'gifts/grit/blame'
+require 'gifts/grit/merge'
 
 module Gifts::Grit
   VERSION = '2.5.0'

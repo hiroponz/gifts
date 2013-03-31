@@ -10,8 +10,8 @@
 #
 
 require 'zlib'
-require 'grit/git-ruby/internal/raw_object'
-require 'grit/git-ruby/internal/file_window'
+require 'gifts/grit/git-ruby/internal/raw_object'
+require 'gifts/grit/git-ruby/internal/file_window'
 
 PACK_SIGNATURE = "PACK"
 PACK_IDX_SIGNATURE = "\377tOc".b

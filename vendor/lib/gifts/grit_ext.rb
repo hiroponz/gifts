@@ -1,10 +1,10 @@
 require "charlock_holmes"
-require "grit_ext/actor"
-require "grit_ext/blob"
-require "grit_ext/commit"
-require "grit_ext/tree"
-require "grit_ext/diff"
-require "grit_ext/version"
+require "gifts/grit_ext/actor"
+require "gifts/grit_ext/blob"
+require "gifts/grit_ext/commit"
+require "gifts/grit_ext/tree"
+require "gifts/grit_ext/diff"
+require "gifts/grit_ext/version"
 
 module Gifts::GritExt
   extend self

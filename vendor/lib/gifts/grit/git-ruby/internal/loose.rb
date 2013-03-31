@@ -11,7 +11,7 @@
 
 require 'zlib'
 require 'digest/sha1'
-require 'grit/git-ruby/internal/raw_object'
+require 'gifts/grit/git-ruby/internal/raw_object'
 
 module Gifts::Grit
   module GitRuby

@@ -8,10 +8,10 @@
 #
 # provides native ruby access to git objects and pack files
 #
-require 'grit/git-ruby/internal/raw_object'
-require 'grit/git-ruby/internal/pack'
-require 'grit/git-ruby/internal/loose'
-require 'grit/git-ruby/git_object'
+require 'gifts/grit/git-ruby/internal/raw_object'
+require 'gifts/grit/git-ruby/internal/pack'
+require 'gifts/grit/git-ruby/internal/loose'
+require 'gifts/grit/git-ruby/git_object'
 
 require 'rubygems'
 require 'diff/lcs'
