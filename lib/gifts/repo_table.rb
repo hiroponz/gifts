@@ -15,7 +15,7 @@ module Gifts
     def add(path)
       path  = File.expand_path(path)
 
-      git_repo = Repo.new(path)
+      git_repo = Grit::Repo.new(path)
       db_repo = table[path] || table.add(path, path: path)
 
       @db.commits.add(git_repo, db_repo)

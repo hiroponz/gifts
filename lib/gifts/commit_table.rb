@@ -24,7 +24,7 @@ module Gifts
     end
 
     def add(git_repo, db_repo)
-      git_repo.find_each do |git_commit|
+      Grit::Commit.find_all(git_repo, nil, { all: true }).each do |git_commit|
         key = db_repo.id.to_s + ":" + git_commit.id
         author = @db.users.add(git_commit.author.name)
         committer = @db.users.add(git_commit.committer.name)
