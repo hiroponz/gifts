@@ -30,7 +30,7 @@ module Gifts
       return if file.nil?
 
       key = db_commit.repo.id.to_s + ":" + path
-      return if table[key] && table[key].last_commit.committed_date > db_commit.committed_date
+      return table[key] if table[key] && table[key].last_commit.committed_date > db_commit.committed_date
 
       ext = File.extname(path).sub(".", "")
 

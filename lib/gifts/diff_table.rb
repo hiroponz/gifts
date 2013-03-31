@@ -15,7 +15,9 @@ module Gifts
     end
 
     def add(git_commit, db_commit)
-      return if db_commit.status != CommitTable::StatusProcessing
+      if db_commit.status != CommitTable::StatusProcessing
+        return table.select { |record| record.commit == db_commit }
+      end
 
       git_commit.diffs.each do |git_diff|
         next if git_diff.diff.empty?
