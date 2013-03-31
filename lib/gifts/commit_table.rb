@@ -24,6 +24,8 @@ module Gifts
     end
 
     def add(git_repo, db_repo)
+      result = []
+
       Grit::Commit.find_all(git_repo, nil, { all: true }).each do |git_commit|
         key = db_repo.id.to_s + ":" + git_commit.id
         author = @db.users.add(git_commit.author.name)
@@ -43,8 +45,12 @@ module Gifts
             status: StatusProcessing
           )
 
-        @db.diffs.add(git_commit, db_commit)
+        db_diffs = @db.diffs.add(git_commit, db_commit)
+
+        result << db_commit
       end
+
+      result
     end
   end
 end
