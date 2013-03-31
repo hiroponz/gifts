@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class Blob
     DEFAULT_MIME_TYPE = "text/plain"
@@ -11,7 +11,7 @@ module Grit
     #   +repo+ is the Repo
     #   +atts+ is a Hash of instance variable data
     #
-    # Returns Grit::Blob (unbaked)
+    # Returns Gifts::Grit::Blob (unbaked)
     def self.create(repo, atts)
       self.allocate.create_initialize(repo, atts)
     end
@@ -20,7 +20,7 @@ module Grit
     #   +repo+ is the Repo
     #   +atts+ is a Hash of instance variable data
     #
-    # Returns Grit::Blob (unbaked)
+    # Returns Gifts::Grit::Blob (unbaked)
     def create_initialize(repo, atts)
       @repo = repo
       atts.each do |k, v|
@@ -53,7 +53,7 @@ module Grit
 
     # The blame information for the given file at the given commit
     #
-    # Returns Array: [Grit::Commit, Array: [<line>]]
+    # Returns Array: [Gifts::Grit::Commit, Array: [<line>]]
     def self.blame(repo, commit, file)
       data = repo.git.blame({:p => true}, commit, '--', file)
 
@@ -114,7 +114,7 @@ module Grit
 
     # Pretty object inspection
     def inspect
-      %Q{#<Grit::Blob "#{@id}">}
+      %Q{#<Gifts::Grit::Blob "#{@id}">}
     end
 
     # Compares blobs by name
@@ -123,4 +123,4 @@ module Grit
     end
   end # Blob
 
-end # Grit
+end # Gifts::Grit

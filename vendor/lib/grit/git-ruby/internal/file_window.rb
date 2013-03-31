@@ -9,7 +9,7 @@
 # provides native ruby access to git objects and pack files
 #
 
-module Grit
+module Gifts::Grit
   module GitRuby
     module Internal
       class FileWindow

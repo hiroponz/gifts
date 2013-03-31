@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class Submodule
     attr_reader :id
@@ -9,7 +9,7 @@ module Grit
     #   +repo+ is the Repo
     #   +atts+ is a Hash of instance variable data
     #
-    # Returns Grit::Submodule (unbaked)
+    # Returns Gifts::Grit::Submodule (unbaked)
     def self.create(repo, atts)
       self.allocate.create_initialize(repo, atts)
     end
@@ -18,7 +18,7 @@ module Grit
     #   +repo+ is the Repo
     #   +atts+ is a Hash of instance variable data
     #
-    # Returns Grit::Submodule
+    # Returns Gifts::Grit::Submodule
     def create_initialize(repo, atts)
       @repo = repo
       atts.each do |k, v|
@@ -81,8 +81,8 @@ module Grit
 
     # Pretty object inspection
     def inspect
-      %Q{#<Grit::Submodule "#{@id}">}
+      %Q{#<Gifts::Grit::Submodule "#{@id}">}
     end
   end # Submodule
 
-end # Grit
+end # Gifts::Grit

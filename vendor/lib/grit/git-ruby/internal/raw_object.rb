@@ -10,7 +10,7 @@
 
 require 'digest/sha1'
 
-module Grit
+module Gifts::Grit
   module GitRuby
     module Internal
       OBJ_NONE = 0

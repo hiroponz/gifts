@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class Tag < Ref
     extend Lazy
@@ -8,7 +8,7 @@ module Grit
     lazy_reader :tag_date
 
     # Writes a new tag object from a hash
-    #  +repo+ is a Grit repo
+    #  +repo+ is a Gifts::Grit repo
     #  +hash+ is the hash of tag values
     #
     # Returns a hash with +sha+ and +size+ of the created object

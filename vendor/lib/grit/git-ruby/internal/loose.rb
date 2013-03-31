@@ -13,7 +13,7 @@ require 'zlib'
 require 'digest/sha1'
 require 'grit/git-ruby/internal/raw_object'
 
-module Grit
+module Gifts::Grit
   module GitRuby
     module Internal
       class LooseObjectError < StandardError

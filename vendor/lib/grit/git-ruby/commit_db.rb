@@ -1,7 +1,7 @@
 begin
   require 'sequel'
 
-  module Grit
+  module Gifts::Grit
 
     class CommitDb
 

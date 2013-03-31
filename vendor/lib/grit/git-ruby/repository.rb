@@ -17,12 +17,12 @@ require 'rubygems'
 require 'diff/lcs'
 require 'diff/lcs/hunk'
 
-# have to do this so it doesn't interfere with Grit::Diff
+# have to do this so it doesn't interfere with Gifts::Grit::Diff
 module Difference
   include Diff
 end
 
-module Grit
+module Gifts::Grit
   module GitRuby
     class Repository
 
@@ -742,7 +742,7 @@ module Grit
         def load_loose(path)
           @loaded << path
           return if !File.exists?(path)
-          @loose << Grit::GitRuby::Internal::LooseStorage.new(path)
+          @loose << Gifts::Grit::GitRuby::Internal::LooseStorage.new(path)
         end
 
         def initpacks
@@ -769,7 +769,7 @@ module Grit
            Dir.open(path) do |dir|
             dir.each do |entry|
               next if !(entry =~ /\.pack$/i)
-              pack = Grit::GitRuby::Internal::PackStorage.new(File.join(path,entry))
+              pack = Gifts::Grit::GitRuby::Internal::PackStorage.new(File.join(path,entry))
               if @options[:map_packfile]
                 pack.cache_objects
               end

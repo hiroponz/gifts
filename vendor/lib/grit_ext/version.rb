@@ -1,4 +1,4 @@
-module GritExt
+module Gifts::GritExt
   extend self
 
   def version

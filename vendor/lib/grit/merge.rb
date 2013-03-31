@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class Merge
 
@@ -38,8 +38,8 @@ module Grit
 
     # Pretty object inspection
     def inspect
-      %Q{#<Grit::Merge}
+      %Q{#<Gifts::Grit::Merge}
     end
   end # Merge
 
-end # Grit
+end # Gifts::Grit

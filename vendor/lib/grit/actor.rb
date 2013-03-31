@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class Actor
     attr_reader :name
@@ -45,8 +45,8 @@ module Grit
 
     # Pretty object inspection
     def inspect
-      %Q{#<Grit::Actor "#{@name} <#{@email}>">}
+      %Q{#<Gifts::Grit::Actor "#{@name} <#{@email}>">}
     end
   end # Actor
 
-end # Grit
+end # Gifts::Grit

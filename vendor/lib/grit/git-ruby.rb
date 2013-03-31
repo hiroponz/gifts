@@ -1,6 +1,6 @@
 require 'grit/git-ruby/repository'
 
-module Grit
+module Gifts::Grit
 
   # the functions in this module intercept the calls to git binary
   # made by the grit objects and attempts to run them in pure ruby
@@ -11,7 +11,7 @@ module Grit
 
     def init(options, *args)
       if options.size == 0
-        Grit::GitRuby::Repository.init(@git_dir)
+        Gifts::Grit::GitRuby::Repository.init(@git_dir)
       else
         method_missing('init', options, *args)
       end
@@ -25,7 +25,7 @@ module Grit
       elsif options[:p]
         try_run { ruby_git.cat_file(sha) }
       end
-    rescue Grit::GitRuby::Repository::NoSuchShaFound
+    rescue Gifts::Grit::GitRuby::Repository::NoSuchShaFound
       ''
     end
 
@@ -38,7 +38,7 @@ module Grit
     def ls_tree(options, treeish, *paths)
       sha = rev_parse({}, treeish)
       ruby_git.ls_tree(sha, paths.flatten, options.delete(:r))
-    rescue Grit::GitRuby::Repository::NoSuchShaFound
+    rescue Gifts::Grit::GitRuby::Repository::NoSuchShaFound
       ''
     end
 
@@ -218,14 +218,14 @@ module Grit
         #if @bytes_read > 5242880 # 5.megabytes
         #  bytes = @bytes_read
         #  @bytes_read = 0
-        #  raise Grit::Git::GitTimeout.new(command, bytes)
+        #  raise Gifts::Grit::Git::GitTimeout.new(command, bytes)
         #end
 
         ret
       rescue Timeout::Error => e
         bytes = @bytes_read
         @bytes_read = 0
-        raise Grit::Git::GitTimeout.new(command, bytes)
+        raise Gifts::Grit::Git::GitTimeout.new(command, bytes)
       end
 
       def looking_for(commit, path = nil)

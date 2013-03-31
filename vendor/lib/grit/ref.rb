@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class Ref
 
@@ -18,7 +18,7 @@ module Grit
       #   +repo+ is the Repo
       #   +options+ is a Hash of options
       #
-      # Returns Grit::Ref[] (baked)
+      # Returns Gifts::Grit::Ref[] (baked)
       def find_all(repo, options = {})
         refs = repo.git.refs(options, prefix)
         refs.split("\n").map do |ref|
@@ -41,7 +41,7 @@ module Grit
     #   +name+ is the name of the head
     #   +commit+ is the Commit that the head points to
     #
-    # Returns Grit::Head (baked)
+    # Returns Gifts::Grit::Head (baked)
     def initialize(name, repo, commit_id)
       @name = name
       @commit_id = commit_id
@@ -69,10 +69,10 @@ module Grit
   # A Head is a named reference to a Commit. Every Head instance contains a name
   # and a Commit object.
   #
-  #   r = Grit::Repo.new("/path/to/repo")
+  #   r = Gifts::Grit::Repo.new("/path/to/repo")
   #   h = r.heads.first
   #   h.name       # => "master"
-  #   h.commit     # => #<Grit::Commit "1c09f116cbc2cb4100fb6935bb162daa4723f455">
+  #   h.commit     # => #<Gifts::Grit::Commit "1c09f116cbc2cb4100fb6935bb162daa4723f455">
   #   h.commit.id  # => "1c09f116cbc2cb4100fb6935bb162daa4723f455"
   class Head < Ref
 
@@ -80,7 +80,7 @@ module Grit
     #   +repo+ is the Repo
     #   +options+ is a Hash of options
     #
-    # Returns Grit::Head (baked)
+    # Returns Gifts::Grit::Head (baked)
     def self.current(repo, options = {})
       head = repo.git.fs_read('HEAD').chomp
       if /ref: refs\/heads\/(.*)/.match(head)
@@ -95,4 +95,4 @@ module Grit
 
   class Note < Ref; end
 
-end # Grit
+end # Gifts::Grit

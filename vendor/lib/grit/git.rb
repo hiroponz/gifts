@@ -1,6 +1,6 @@
 require 'tempfile'
 require 'posix-spawn'
-module Grit
+module Gifts::Grit
 
   class Git
     include POSIX::Spawn
@@ -85,10 +85,10 @@ module Grit
     self.git_max_size = 5242880 # 5.megabytes
 
     def self.with_timeout(timeout = 10)
-      old_timeout = Grit::Git.git_timeout
-      Grit::Git.git_timeout = timeout
+      old_timeout = Gifts::Grit::Git.git_timeout
+      Gifts::Grit::Git.git_timeout = timeout
       yield
-      Grit::Git.git_timeout = old_timeout
+      Gifts::Grit::Git.git_timeout = old_timeout
     end
 
     attr_accessor :git_dir, :bytes_read, :work_tree
@@ -278,7 +278,7 @@ module Grit
     #   are used to control command execution and are not passed in command
     #   invocation:
     #     :timeout - Maximum amount of time the command can run for before
-    #       being aborted. When true, use Grit::Git.git_timeout; when numeric,
+    #       being aborted. When true, use Gifts::Grit::Git.git_timeout; when numeric,
     #       use that number of seconds; when false or 0, disable timeout.
     #     :base - Set false to avoid passing the --git-dir argument when
     #       invoking the git command.
@@ -304,9 +304,9 @@ module Grit
     #   set. The exitstatus is an small integer that was the process's exit
     #   status. The out and err elements are the data written to stdout and
     #   stderr as Strings.
-    # Raises Grit::Git::GitTimeout when the timeout is exceeded or when more
-    #   than Grit::Git.git_max_size bytes are output.
-    # Raises Grit::Git::CommandFailed when the :raise option is set true and the
+    # Raises Gifts::Grit::Git::GitTimeout when the timeout is exceeded or when more
+    #   than Gifts::Grit::Git.git_max_size bytes are output.
+    # Raises Gifts::Grit::Git::CommandFailed when the :raise option is set true and the
     #   git command exits with a non-zero exit status. The CommandFailed's #command,
     #   #exitstatus, and #err attributes can be used to retrieve additional
     #   detail about the error.
@@ -339,17 +339,17 @@ module Grit
       argv.concat(args)
 
       # run it and deal with fallout
-      Grit.log(argv.join(' ')) if Grit.debug
+      Gifts::Grit.log(argv.join(' ')) if Gifts::Grit.debug
 
       process =
         Child.new(env, *(argv + [{
           :input   => input,
           :chdir   => chdir,
-          :timeout => (Grit::Git.git_timeout if timeout == true),
-          :max     => (Grit::Git.git_max_size if timeout == true)
+          :timeout => (Gifts::Grit::Git.git_timeout if timeout == true),
+          :max     => (Gifts::Grit::Git.git_max_size if timeout == true)
         }]))
-      Grit.log(process.out) if Grit.debug
-      Grit.log(process.err) if Grit.debug
+      Gifts::Grit.log(process.out) if Gifts::Grit.debug
+      Gifts::Grit.log(process.err) if Gifts::Grit.debug
 
       status = process.status
       if raise_errors && !status.success?
@@ -404,7 +404,7 @@ module Grit
     # Simple wrapper around Timeout::timeout.
     #
     # seconds - Float number of seconds before a Timeout::Error is raised. When
-    #   true, the Grit::Git.git_timeout value is used. When the timeout is less
+    #   true, the Gifts::Grit::Git.git_timeout value is used. When the timeout is less
     #   than or equal to 0, no timeout is established.
     #
     # Raises Timeout::Error when the timeout has elapsed.
@@ -433,19 +433,19 @@ module Grit
       opt_args = transform_options(options)
 
       if RUBY_PLATFORM.downcase =~ /mswin(?!ce)|mingw|bccwin/
-        ext_args = args.reject { |a| a.empty? }.map { |a| (a == '--' || a[0].chr == '|' || Grit.no_quote) ? a : "\"#{e(a)}\"" }
+        ext_args = args.reject { |a| a.empty? }.map { |a| (a == '--' || a[0].chr == '|' || Gifts::Grit.no_quote) ? a : "\"#{e(a)}\"" }
         gitdir = base ? "--git-dir=\"#{self.git_dir}\"" : ""
         call = "#{prefix}#{Git.git_binary} #{gitdir} #{cmd.to_s.gsub(/_/, '-')} #{(opt_args + ext_args).join(' ')}#{e(postfix)}"
       else
-        ext_args = args.reject { |a| a.empty? }.map { |a| (a == '--' || a[0].chr == '|' || Grit.no_quote) ? a : "'#{e(a)}'" }
+        ext_args = args.reject { |a| a.empty? }.map { |a| (a == '--' || a[0].chr == '|' || Gifts::Grit.no_quote) ? a : "'#{e(a)}'" }
         gitdir = base ? "--git-dir='#{self.git_dir}'" : ""
         call = "#{prefix}#{Git.git_binary} #{gitdir} #{cmd.to_s.gsub(/_/, '-')} #{(opt_args + ext_args).join(' ')}#{e(postfix)}"
       end
 
-      Grit.log(call) if Grit.debug
+      Gifts::Grit.log(call) if Gifts::Grit.debug
       response, err = timeout ? sh(call, &block) : wild_sh(call, &block)
-      Grit.log(response) if Grit.debug
-      Grit.log(err) if Grit.debug
+      Gifts::Grit.log(response) if Gifts::Grit.debug
+      Gifts::Grit.log(err) if Gifts::Grit.debug
       response
     end
 
@@ -498,4 +498,4 @@ module Grit
     end
   end # Git
 
-end # Grit
+end # Gifts::Grit

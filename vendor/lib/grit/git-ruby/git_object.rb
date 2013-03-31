@@ -13,7 +13,7 @@
 # into parsed data that can then be used in another fashion
 require 'stringio'
 
-module Grit
+module Gifts::Grit
   module GitRuby
 
   # class for author/committer/tagger lines
@@ -201,8 +201,8 @@ module Grit
 
       entries = []
       while !raw.eof?
-        mode      = Grit::GitRuby.read_bytes_until(raw, ' ')
-        file_name = Grit::GitRuby.read_bytes_until(raw, "\0")
+        mode      = Gifts::Grit::GitRuby.read_bytes_until(raw, ' ')
+        file_name = Gifts::Grit::GitRuby.read_bytes_until(raw, "\0")
         raw_sha   = raw.read(20)
         sha = raw_sha.unpack("H*").first
 

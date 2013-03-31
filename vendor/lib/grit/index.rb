@@ -1,14 +1,14 @@
-module Grit
+module Gifts::Grit
 
   class Index
-    # Public: Gets/Sets the Grit::Repo to which this index belongs.
+    # Public: Gets/Sets the Gifts::Grit::Repo to which this index belongs.
     attr_accessor :repo
 
     # Public: Gets/Sets the Hash tree map that holds the changes to be made
     # in the next commit.
     attr_accessor :tree
 
-    # Public: Gets/Sets the Grit::Tree object representing the tree upon
+    # Public: Gets/Sets the Gifts::Grit::Tree object representing the tree upon
     # which the next commit will be based.
     attr_accessor :current_tree
 
@@ -18,9 +18,9 @@ module Grit
 
     # Initialize a new Index object.
     #
-    # repo - The Grit::Repo to which the index belongs.
+    # repo - The Gifts::Grit::Repo to which the index belongs.
     #
-    # Returns the newly initialized Grit::Index.
+    # Returns the newly initialized Gifts::Grit::Index.
     def initialize(repo)
       self.repo = repo
       self.tree = {}
@@ -72,10 +72,10 @@ module Grit
     #
     # message - The String commit message.
     # options - An optional Hash of index options.
-    #           :parents        - Array of String commit SHA1s or Grit::Commit
+    #           :parents        - Array of String commit SHA1s or Gifts::Grit::Commit
     #                             objects to attach this commit to to form a 
     #                             new head (default: nil).
-    #           :actor          - The Grit::Actor details of the user making
+    #           :actor          - The Gifts::Grit::Actor details of the user making
     #                             the commit (default: nil).
     #           :last_tree      - The String SHA1 of a tree to compare with
     #                             in order to avoid making empty commits
@@ -90,9 +90,9 @@ module Grit
     # The legacy argument style looks like:
     #
     # message   - The String commit message.
-    # parents   - Array of String commit SHA1s or Grit::Commit objects to
+    # parents   - Array of String commit SHA1s or Gifts::Grit::Commit objects to
     #             attach this commit to to form a new head (default: nil).
-    # actor     - The Grit::Actor details of the user making the commit
+    # actor     - The Gifts::Grit::Actor details of the user making the commit
     #             (default: nil).
     # last_tree - The String SHA1 of a tree to compare with in order to avoid
     #             making empty commits (default: nil).
@@ -158,7 +158,7 @@ module Grit
     # tree -     The Hash tree map:
     #            key - The String directory or filename.
     #            val - The Hash submap or the String contents of the file.
-    # now_tree - The Grit::Tree representing the a previous tree upon which
+    # now_tree - The Gifts::Grit::Tree representing the a previous tree upon which
     #            this tree will be based (default: nil).
     #
     # Returns the String SHA1 String of the tree.
@@ -171,7 +171,7 @@ module Grit
       now_tree.contents.each do |obj|
         sha = [obj.id].pack("H*")
         k = obj.name
-        k += '/' if (obj.class == Grit::Tree)
+        k += '/' if (obj.class == Gifts::Grit::Tree)
         tmode = obj.mode.to_i.to_s  ## remove zero-padding
         tree_contents[k] = "%s %s\0%s" % [tmode, obj.name, sha]
       end if now_tree
@@ -219,4 +219,4 @@ module Grit
     end
   end # Index
 
-end # Grit
+end # Gifts::Grit

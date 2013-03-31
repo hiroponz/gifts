@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class Commit
     extend Lazy
@@ -16,12 +16,12 @@ module Grit
 
     # Parses output from the `git-cat-file --batch'.
     #
-    # repo   - Grit::Repo instance.
+    # repo   - Gifts::Grit::Repo instance.
     # sha    - String SHA of the Commit.
     # size   - Fixnum size of the object.
     # object - Parsed String output from `git cat-file --batch`.
     #
-    # Returns an Array of Grit::Commit objects.
+    # Returns an Array of Gifts::Grit::Commit objects.
     def self.parse_batch(repo, sha, size, object)
       info, message = object.split("\n\n", 2)
 
@@ -29,10 +29,10 @@ module Grit
       tree = lines.shift.split(' ', 2).last
       parents = []
       parents << lines.shift[7..-1] while lines.first[0, 6] == 'parent'
-      author,    authored_date  = Grit::Commit.actor(lines.shift)
-      committer, committed_date = Grit::Commit.actor(lines.shift)
+      author,    authored_date  = Gifts::Grit::Commit.actor(lines.shift)
+      committer, committed_date = Gifts::Grit::Commit.actor(lines.shift)
 
-      Grit::Commit.new(
+      Gifts::Grit::Commit.new(
         repo, sha, parents, tree,
         author, authored_date,
         committer, committed_date,
@@ -49,7 +49,7 @@ module Grit
     #   +committed_date+ is the committed Time
     #   +message+ is an array of commit message lines
     #
-    # Returns Grit::Commit (baked)
+    # Returns Gifts::Grit::Commit (baked)
     def initialize(repo, id, parents, tree, author, authored_date, committer, committed_date, message)
       @repo = repo
       @id = id
@@ -71,7 +71,7 @@ module Grit
     #   +repo+ is the Repo
     #   +atts+ is a Hash of instance variable data
     #
-    # Returns Grit::Commit (unbaked)
+    # Returns Gifts::Grit::Commit (unbaked)
     def self.create(repo, atts)
       self.allocate.create_initialize(repo, atts)
     end
@@ -80,7 +80,7 @@ module Grit
     #   +repo+ is the Repo
     #   +atts+ is a Hash of instance variable data
     #
-    # Returns Grit::Commit (unbaked)
+    # Returns Gifts::Grit::Commit (unbaked)
     def create_initialize(repo, atts)
       @repo = repo
       atts.each do |k, v|
@@ -109,7 +109,7 @@ module Grit
     #     :max_count is the maximum number of commits to fetch
     #     :skip is the number of commits to skip
     #
-    # Returns Grit::Commit[] (baked)
+    # Returns Gifts::Grit::Commit[] (baked)
     def self.find_all(repo, ref, options = {})
       allowed_options = [:max_count, :skip, :since]
 
@@ -123,7 +123,7 @@ module Grit
       end
 
       self.list_from_string(repo, output)
-    rescue Grit::GitRuby::Repository::NoSuchShaFound
+    rescue Gifts::Grit::GitRuby::Repository::NoSuchShaFound
       []
     end
 
@@ -131,7 +131,7 @@ module Grit
     #   +repo+ is the Repo
     #   +text+ is the text output from the git command (raw format)
     #
-    # Returns Grit::Commit[] (baked)
+    # Returns Gifts::Grit::Commit[] (baked)
     #
     # really should re-write this to be more accepting of non-standard commit messages
     # - it broke when 'encoding' was introduced - not sure what else might show up
@@ -185,7 +185,7 @@ module Grit
 
     # Show diffs between two trees.
     #
-    # repo    - The current Grit::Repo instance.
+    # repo    - The current Gifts::Grit::Repo instance.
     # a       - A String named commit.
     # b       - An optional String named commit.  Passing an array assumes you
     #           wish to omit the second named commit and limit the diff to the
@@ -193,7 +193,7 @@ module Grit
     # paths   - An optional Array of paths to limit the diff.
     # options - An optional Hash of options.  Merged into {:full_index => true}.
     #
-    # Returns Grit::Diff[] (baked)
+    # Returns Gifts::Grit::Diff[] (baked)
     def self.diff(repo, a, b = nil, paths = [], options = {})
       if b.is_a?(Array)
         paths = b
@@ -224,9 +224,9 @@ module Grit
 
     # Shows diffs between the commit's parent and the commit.
     #
-    # options - An optional Hash of options, passed to Grit::Commit.diff.
+    # options - An optional Hash of options, passed to Gifts::Grit::Commit.diff.
     #
-    # Returns Grit::Diff[] (baked)
+    # Returns Gifts::Grit::Diff[] (baked)
     def diffs(options = {})
       if parents.empty?
         show
@@ -284,7 +284,7 @@ module Grit
 
     # Pretty object inspection
     def inspect
-      %Q{#<Grit::Commit "#{@id}">}
+      %Q{#<Gifts::Grit::Commit "#{@id}">}
     end
 
     # private
@@ -321,4 +321,4 @@ module Grit
     end
   end # Commit
 
-end # Grit
+end # Gifts::Grit

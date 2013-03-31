@@ -29,7 +29,7 @@ require 'grit/ruby1.9'
 require 'grit/lazy'
 require 'grit/errors'
 require 'grit/git-ruby'
-require 'grit/git' unless defined? Grit::Git
+require 'grit/git' unless defined? Gifts::Grit::Git
 require 'grit/ref'
 require 'grit/tag'
 require 'grit/commit'
@@ -46,7 +46,7 @@ require 'grit/submodule'
 require 'grit/blame'
 require 'grit/merge'
 
-module Grit
+module Gifts::Grit
   VERSION = '2.5.0'
 
   class << self

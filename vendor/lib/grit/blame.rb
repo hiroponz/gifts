@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class Blame
 
@@ -52,7 +52,7 @@ module Grit
 
     # Pretty object inspection
     def inspect
-      %Q{#<Grit::Blame "#{@file} <#{@commit}>">}
+      %Q{#<Gifts::Grit::Blame "#{@file} <#{@commit}>">}
     end
 
     class BlameLine
@@ -67,4 +67,4 @@ module Grit
 
   end # Blame
 
-end # Grit
+end # Gifts::Grit

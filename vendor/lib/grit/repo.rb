@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class Repo
     DAEMON_EXPORT_FILE = 'git-daemon-export-ok'
@@ -16,7 +16,7 @@ module Grit
     # Public: The Boolean of whether or not the repo is bare.
     attr_reader :bare
 
-    # Public: The Grit::Git command line interface object.
+    # Public: The Gifts::Grit::Git command line interface object.
     attr_accessor :git
 
     # Public: Create a new Repo instance.
@@ -33,10 +33,10 @@ module Grit
     #   r = Repo.new("/Users/tom/public/bare.git")
     #   r = Repo.new("/Users/tom/public/bare", {:is_bare => true})
     #
-    # Returns a newly initialized Grit::Repo.
-    # Raises Grit::InvalidGitRepositoryError if the path exists but is not
+    # Returns a newly initialized Gifts::Grit::Repo.
+    # Raises Gifts::Grit::InvalidGitRepositoryError if the path exists but is not
     #   a Git repository.
-    # Raises Grit::NoSuchPathError if the path does not exist.
+    # Raises Gifts::Grit::NoSuchPathError if the path does not exist.
     def initialize(path, options = {})
       epath = File.expand_path(path)
 
@@ -58,20 +58,20 @@ module Grit
 
     # Public: Initialize a git repository (create it on the filesystem). By
     # default, the newly created repository will contain a working directory.
-    # If you would like to create a bare repo, use Grit::Repo.init_bare.
+    # If you would like to create a bare repo, use Gifts::Grit::Repo.init_bare.
     #
     # path         - The String full path to the repo. Traditionally ends with
     #                "/<name>.git".
     # git_options  - A Hash of additional options to the git init command
     #                (default: {}).
-    # repo_options - A Hash of additional options to the Grit::Repo.new call
+    # repo_options - A Hash of additional options to the Gifts::Grit::Repo.new call
     #                (default: {}).
     #
     # Examples
     #
-    #   Grit::Repo.init('/var/git/myrepo.git')
+    #   Gifts::Grit::Repo.init('/var/git/myrepo.git')
     #
-    # Returns the newly created Grit::Repo.
+    # Returns the newly created Gifts::Grit::Repo.
     def self.init(path, git_options = {}, repo_options = {})
       git_options = {:base => false}.merge(git_options)
       git = Git.new(path)
@@ -86,14 +86,14 @@ module Grit
     #                "/<name>.git".
     # git_options  - A Hash of additional options to the git init command
     #                (default: {}).
-    # repo_options - A Hash of additional options to the Grit::Repo.new call
+    # repo_options - A Hash of additional options to the Gifts::Grit::Repo.new call
     #                (default: {}).
     #
     # Examples
     #
-    #   Grit::Repo.init_bare('/var/git/myrepo.git')
+    #   Gifts::Grit::Repo.init_bare('/var/git/myrepo.git')
     #
-    # Returns the newly created Grit::Repo.
+    # Returns the newly created Gifts::Grit::Repo.
     def self.init_bare(path, git_options = {}, repo_options = {})
       git_options = {:bare => true}.merge(git_options)
       git = Git.new(path)
@@ -110,10 +110,10 @@ module Grit
     #                "/<name>.git".
     # git_options  - A Hash of additional options to the git init command
     #                (default: {}).
-    # repo_options - A Hash of additional options to the Grit::Repo.new call
+    # repo_options - A Hash of additional options to the Gifts::Grit::Repo.new call
     #                (default: {}).
     #
-    # Returns the new or existing Grit::Repo.
+    # Returns the new or existing Gifts::Grit::Repo.
     def self.init_bare_or_open(path, git_options = {}, repo_options = {})
       git = Git.new(path)
 
@@ -133,7 +133,7 @@ module Grit
     #           These options will be merged on top of the default Hash:
     #           {:bare => true, :shared => true}.
     #
-    # Returns the newly forked Grit::Repo.
+    # Returns the newly forked Gifts::Grit::Repo.
     def fork_bare(path, options = {})
       default_options = {:bare => true, :shared => true}
       real_options = default_options.merge(options)
@@ -150,7 +150,7 @@ module Grit
     #           These options will be merged on top of the default Hash:
     #           {:bare => true, :shared => true}.
     #
-    # Returns the newly forked Grit::Repo.
+    # Returns the newly forked Gifts::Grit::Repo.
     def fork_bare_from(path, options = {})
       default_options = {:bare => true, :shared => true}
       real_options = default_options.merge(options)
@@ -164,18 +164,18 @@ module Grit
     #
     # *shas - Array of String SHAs.
     #
-    # Returns an Array of Grit objects (Grit::Commit).
+    # Returns an Array of Gifts::Grit objects (Gifts::Grit::Commit).
     def batch(*shas)
       shas.flatten!
       text = git.native(:cat_file, {:batch => true, :input => (shas * "\n")})
       parse_batch(text)
     end
 
-    # Parses `git cat-file --batch` output, returning an array of Grit objects.
+    # Parses `git cat-file --batch` output, returning an array of Gifts::Grit objects.
     #
     # text - Raw String output.
     #
-    # Returns an Array of Grit objects (Grit::Commit).
+    # Returns an Array of Gifts::Grit objects (Gifts::Grit::Commit).
     def parse_batch(text)
       io = StringIO.new(text)
       objects = []
@@ -208,7 +208,7 @@ module Grit
     # An array of Head objects representing the branch heads in
     # this repo
     #
-    # Returns Grit::Head[] (baked)
+    # Returns Gifts::Grit::Head[] (baked)
     def heads
       Head.find_all(self)
     end
@@ -230,7 +230,7 @@ module Grit
 
     # Object reprsenting the current repo head.
     #
-    # Returns Grit::Head (baked)
+    # Returns Gifts::Grit::Head (baked)
     def head
       Head.current(self)
     end
@@ -278,7 +278,7 @@ module Grit
 
     # An array of Tag objects that are available in this repo
     #
-    # Returns Grit::Tag[] (baked)
+    # Returns Gifts::Grit::Tag[] (baked)
     def tags
       Tag.find_all(self)
     end
@@ -314,7 +314,7 @@ module Grit
     # An array of Remote objects representing the remote branches in
     # this repo
     #
-    # Returns Grit::Remote[] (baked)
+    # Returns Gifts::Grit::Remote[] (baked)
     def remotes
       Remote.find_all(self)
     end
@@ -354,7 +354,7 @@ module Grit
     # An array of Ref objects representing the refs in
     # this repo
     #
-    # Returns Grit::Ref[] (baked)
+    # Returns Gifts::Grit::Ref[] (baked)
     def refs
       [ Head.find_all(self), Tag.find_all(self), Remote.find_all(self) ].flatten
     end
@@ -386,7 +386,7 @@ module Grit
     #   +max_count+ is the maximum number of commits to return (default 10, use +false+ for all)
     #   +skip+ is the number of commits to skip (default 0)
     #
-    # Returns Grit::Commit[] (baked)
+    # Returns Gifts::Grit::Commit[] (baked)
     def commits(start = 'master', max_count = 10, skip = 0)
       options = {:max_count => max_count,
                  :skip => skip}
@@ -399,7 +399,7 @@ module Grit
     #   +from+ is the branch/commit name of the younger item
     #   +to+ is the branch/commit name of the older item
     #
-    # Returns Grit::Commit[] (baked)
+    # Returns Gifts::Grit::Commit[] (baked)
     def commits_between(from, to)
       Commit.find_all(self, "#{from}..#{to}").reverse
     end
@@ -415,7 +415,7 @@ module Grit
     #   +since+ is a string representing a date/time
     #   +extra_options+ is a hash of extra options
     #
-    # Returns Grit::Commit[] (baked)
+    # Returns Gifts::Grit::Commit[] (baked)
     def commits_since(start = 'master', since = '1970-01-01', extra_options = {})
       options = {:since => since}.merge(extra_options)
 
@@ -433,7 +433,7 @@ module Grit
     # The Commit object for the specified id
     #   +id+ is the SHA1 identifier of the commit
     #
-    # Returns Grit::Commit (baked)
+    # Returns Gifts::Grit::Commit (baked)
     def commit(id)
       options = {:max_count => 1}
 
@@ -442,7 +442,7 @@ module Grit
 
     # Returns a list of commits that is in +other_repo+ but not in self
     #
-    # Returns Grit::Commit[]
+    # Returns Gifts::Grit::Commit[]
     def commit_deltas_from(other_repo, ref = "master", other_ref = "master")
       # TODO: we should be able to figure out the branch point, rather than
       # rev-list'ing the whole thing
@@ -476,7 +476,7 @@ module Grit
 
     def diff_objects(commit_sha, parents = true)
       revs = []
-      Grit.no_quote = true
+      Gifts::Grit.no_quote = true
       if parents
         # PARENTS:
         revs = self.git.diff_tree({:timeout => false, :r => true, :t => true, :m => true}, commit_sha).
@@ -487,7 +487,7 @@ module Grit
           split("\n").map{ |a| a.split("\t").first.split(' ')[2] }
       end
       revs << self.commit(commit_sha).tree.id
-      Grit.no_quote = false
+      Gifts::Grit.no_quote = false
       return revs.uniq.compact
     end
 
@@ -498,7 +498,7 @@ module Grit
     # Examples
     #   repo.tree('master', ['lib/'])
     #
-    # Returns Grit::Tree (baked)
+    # Returns Gifts::Grit::Tree (baked)
     def tree(treeish = 'master', paths = [])
       Tree.construct(self, treeish, paths)
     end
@@ -534,8 +534,8 @@ module Grit
 
     def object(sha)
       obj = git.get_git_object(sha)
-      raw = Grit::GitRuby::Internal::RawObject.new(obj[:type], obj[:content])
-      object = Grit::GitRuby::GitObject.from_raw(raw)
+      raw = Gifts::Grit::GitRuby::Internal::RawObject.new(obj[:type], obj[:content])
+      object = Gifts::Grit::GitRuby::GitObject.from_raw(raw)
       object.sha = sha
       object
     end
@@ -543,14 +543,14 @@ module Grit
     # The Blob object for the given id
     #   +id+ is the SHA1 id of the blob
     #
-    # Returns Grit::Blob (unbaked)
+    # Returns Gifts::Grit::Blob (unbaked)
     def blob(id)
       Blob.create(self, :id => id)
     end
 
     # The commit log for a treeish
     #
-    # Returns Grit::Commit[]
+    # Returns Gifts::Grit::Commit[]
     def log(commit = 'master', path = nil, options = {})
       default_options = {:pretty => "raw"}
       actual_options  = default_options.merge(options)
@@ -577,7 +577,7 @@ module Grit
     # The commit diff for the given commit
     #   +commit+ is the commit name/id
     #
-    # Returns Grit::Diff[]
+    # Returns Gifts::Grit::Diff[]
     def commit_diff(commit)
       Commit.diff(self, commit)
     end
@@ -715,8 +715,8 @@ module Grit
 
     # Pretty object inspection
     def inspect
-      %Q{#<Grit::Repo "#{@path}">}
+      %Q{#<Gifts::Grit::Repo "#{@path}">}
     end
   end # Repo
 
-end # Grit
+end # Gifts::Grit

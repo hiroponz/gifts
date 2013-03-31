@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class Config
     def initialize(repo)
@@ -41,4 +41,4 @@ module Grit
       end
   end # Config
 
-end # Grit
+end # Gifts::Grit

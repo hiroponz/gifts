@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class Diff
     attr_reader :a_path, :b_path
@@ -76,4 +76,4 @@ module Grit
     end
   end # Diff
 
-end # Grit
+end # Gifts::Grit

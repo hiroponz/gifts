@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class Status
     include Enumerable

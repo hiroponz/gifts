@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class Tree
     extend Lazy
@@ -13,7 +13,7 @@ module Grit
     #   +treeish+ is the reference
     #   +paths+ is an optional Array of directory paths to restrict the tree
     #
-    # Returns Grit::Tree (baked)
+    # Returns Gifts::Grit::Tree (baked)
     def self.construct(repo, treeish, paths = [])
       output = repo.git.ls_tree({:raise => true}, treeish, *paths)
       self.allocate.construct_initialize(repo, treeish, output)
@@ -40,7 +40,7 @@ module Grit
     #   +repo+ is the Repo
     #   +atts+ is a Hash of instance variable data
     #
-    # Returns Grit::Tree (unbaked)
+    # Returns Gifts::Grit::Tree (unbaked)
     def self.create(repo, atts)
       self.allocate.create_initialize(repo, atts)
     end
@@ -49,7 +49,7 @@ module Grit
     #   +repo+ is the Repo
     #   +atts+ is a Hash of instance variable data
     #
-    # Returns Grit::Tree (unbaked)
+    # Returns Gifts::Grit::Tree (unbaked)
     def create_initialize(repo, atts)
       @repo = repo
 
@@ -63,7 +63,7 @@ module Grit
     #   +repo+ is the Repo
     #   +text+ is the single line containing the items data in `git ls-tree` format
     #
-    # Returns Grit::Blob or Grit::Tree
+    # Returns Gifts::Grit::Blob or Gifts::Grit::Tree
     def content_from_string(repo, text)
       mode, type, id, name = text.split(/ |\t/, 4)
       case type
@@ -76,7 +76,7 @@ module Grit
         when "commit"
           Submodule.create(repo, :id => id, :mode => mode, :name => name)
         else
-          raise Grit::InvalidObjectType, type
+          raise Gifts::Grit::InvalidObjectType, type
       end
     end
 
@@ -84,11 +84,11 @@ module Grit
     #
     # Examples
     #   Repo.new('/path/to/grit').tree/'lib'
-    #   # => #<Grit::Tree "6cc23ee138be09ff8c28b07162720018b244e95e">
+    #   # => #<Gifts::Grit::Tree "6cc23ee138be09ff8c28b07162720018b244e95e">
     #   Repo.new('/path/to/grit').tree/'README.txt'
-    #   # => #<Grit::Blob "8b1e02c0fb554eed2ce2ef737a68bb369d7527df">
+    #   # => #<Gifts::Grit::Blob "8b1e02c0fb554eed2ce2ef737a68bb369d7527df">
     #
-    # Returns Grit::Blob or Grit::Tree or nil if not found
+    # Returns Gifts::Grit::Blob or Gifts::Grit::Tree or nil if not found
     def /(file)
       if file =~ /\//
         file.split("/").inject(self) { |acc, x| acc/x } rescue nil
@@ -103,7 +103,7 @@ module Grit
 
     # Pretty object inspection
     def inspect
-      %Q{#<Grit::Tree "#{@id}">}
+      %Q{#<Gifts::Grit::Tree "#{@id}">}
     end
 
     # Find only Tree objects from contents
@@ -122,4 +122,4 @@ module Grit
     end
   end # Tree
 
-end # Grit
+end # Gifts::Grit

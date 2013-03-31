@@ -1,4 +1,4 @@
-module Grit
+module Gifts::Grit
 
   class CommitStats
 
@@ -11,7 +11,7 @@ module Grit
     #       [filename, adds, deletes, total],
     #       [filename, adds, deletes, total] ]
     #
-    # Returns Grit::CommitStats (baked)
+    # Returns Gifts::Grit::CommitStats (baked)
     def initialize(repo, id, files)
       @repo = repo
       @id = id
@@ -28,7 +28,7 @@ module Grit
     #     :max_count is the maximum number of commits to fetch
     #     :skip is the number of commits to skip
     #
-    # Returns assoc array [sha, Grit::Commit[] (baked)]
+    # Returns assoc array [sha, Gifts::Grit::Commit[] (baked)]
     def self.find_all(repo, ref, options = {})
       allowed_options = [:max_count, :skip, :since]
 
@@ -48,7 +48,7 @@ module Grit
     #   +repo+ is the Repo
     #   +text+ is the text output from the git command (raw format)
     #
-    # Returns assoc array [sha, Grit::Commit[] (baked)]
+    # Returns assoc array [sha, Gifts::Grit::Commit[] (baked)]
     def self.list_from_string(repo, text)
       lines = text.split("\n")
 
@@ -85,7 +85,7 @@ module Grit
 
     # Pretty object inspection
     def inspect
-      %Q{#<Grit::CommitStats "#{@id}">}
+      %Q{#<Gifts::Grit::CommitStats "#{@id}">}
     end
 
     # Convert to an easy-to-traverse structure
@@ -125,4 +125,4 @@ module Grit
     end
   end
 
-end # Grit
+end # Gifts::Grit

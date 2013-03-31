@@ -6,7 +6,7 @@ require "grit_ext/tree"
 require "grit_ext/diff"
 require "grit_ext/version"
 
-module GritExt
+module Gifts::GritExt
   extend self
 
   def encode!(message)
