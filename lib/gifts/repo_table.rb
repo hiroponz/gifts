@@ -19,6 +19,8 @@ module Gifts
       db_repo = table[path] || table.add(path, path: path)
 
       @db.commits.add(git_repo, db_repo)
+
+      db_repo
     end
   end
 end
