@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+vendor = File.expand_path('../vendor/lib', __FILE__)
+$LOAD_PATH.unshift(vendor) unless $LOAD_PATH.include?(vendor)
 require 'gifts/version'
 
 Gem::Specification.new do |gem|
@@ -17,10 +19,13 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
+  gem.add_dependency "posix-spawn", "~> 0.3.6"
+  gem.add_dependency "mime-types", "~> 1.15"
+  gem.add_dependency "diff-lcs", "~> 1.1"
+  gem.add_dependency "charlock_holmes", "~> 0.6.9"
   gem.add_dependency "rroonga"
-  gem.add_dependency "gitlab-grit"
-  gem.add_dependency "grit_ext"
 
   gem.add_development_dependency "rspec"
   gem.add_development_dependency "pry"
+  gem.add_development_dependency "mocha"
 end

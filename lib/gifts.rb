@@ -1,10 +1,11 @@
 require "groonga"
-require "grit"
-require "grit_ext"
 require 'fileutils'
 require 'delegate'
 require 'forwardable'
 require 'charlock_holmes'
+
+require "grit"
+require "grit_ext"
 
 require "gifts/version"
 require "gifts/database"
