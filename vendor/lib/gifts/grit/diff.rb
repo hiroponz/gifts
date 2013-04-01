@@ -57,10 +57,10 @@ module Gifts::Grit
         elsif lines.first =~ /^similarity index (\d+)\%/
           sim_index    = $1.to_i
           renamed_file = true
-          2.times { lines.shift } # shift away the 2 `rename from/to ...` lines
+          3.times { lines.shift } # shift away the similarity line and the 2 `rename from/to ...` lines
         end
 
-        m, a_blob, b_blob, b_mode = *lines.shift.match(%r{^index ([0-9A-Fa-f]+)\.\.([0-9A-Fa-f]+) ?(.+)?$})
+        m, a_blob, b_blob, b_mode = *lines.shift.match(%r{^index ([0-9A-Fa-f]+)\.\.([0-9A-Fa-f]+) ?(.+)?$}) if lines.first
         b_mode.strip! if b_mode
 
         diff_lines = []
