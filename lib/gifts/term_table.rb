@@ -10,7 +10,7 @@ module Gifts
           "term",
           type: :patricia_trie,
           normalizer: :NormalizerAuto,
-          default_tokenizer: "TokenBigram"
+          default_tokenizer: "TokenBigramSplitSymbolAlphaDigit"
         ) do |table|
           table.index("commit.message", with_position: true)
 
