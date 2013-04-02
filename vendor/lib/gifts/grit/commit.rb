@@ -202,9 +202,9 @@ module Gifts::Grit
       paths.unshift("--") unless paths.empty?
       paths.unshift(b)    unless b.nil?
       paths.unshift(a)
-      options = {:full_index => true}.update(options)
-      text    = repo.git.diff(options, *paths)
-      Diff.list_from_string(repo, text)
+      options = {full_index: true, no_color: true, no_ext_diff: true, M: true}.update(options)
+      text    = repo.git.native(:diff, options, *paths)
+      Diff.list_from_string(repo, text, a)
     end
 
     def show
@@ -219,7 +219,7 @@ module Gifts::Grit
       else
         diff = ''
       end
-      Diff.list_from_string(@repo, diff)
+      Diff.list_from_string(@repo, diff, @id)
     end
 
     # Shows diffs between the commit's parent and the commit.

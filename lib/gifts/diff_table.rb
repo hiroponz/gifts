@@ -20,7 +20,7 @@ module Gifts
 
         begin
           git_commit.diffs.each do |git_diff|
-            next if git_diff.diff.empty?
+            next if git_diff.diff.nil?
 
             db_file = @db.files.add(git_commit, git_diff, db_commit)
 
@@ -32,7 +32,7 @@ module Gifts
                   key,
                   commit: db_commit,
                   file: db_file,
-                  diff: diff_content(git_diff.diff)
+                  diff: git_diff.diff
                 )
               result << db_diff
             end
@@ -47,16 +47,9 @@ module Gifts
         result
       else
         records = table.select do |record|
-          record.commit =~ db_commit
+          record.commit == db_commit
         end
-        (records && records.collect) || []
       end
-    end
-
-    def diff_content(diff)
-      lines = diff.lines.to_a
-      lines.shift(2)
-      lines.join
     end
   end
 end

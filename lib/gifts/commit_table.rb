@@ -39,12 +39,12 @@ module Gifts
             table[key] ||
             table.add(
               key,
-              author: author.key,
+              author: author,
               authored_date: git_commit.authored_date,
-              committer: committer.key,
+              committer: committer,
               committed_date: git_commit.committed_date,
               message: git_commit.message,
-              repo: db_repo.key,
+              repo: db_repo,
               rev: git_commit.id,
               status: StatusProcessing
             )

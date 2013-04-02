@@ -34,8 +34,8 @@ module Gifts
 
       ext = File.extname(path).sub(".", "")
 
-      t =  table[key] || table.add(key, repo: db_commit.repo.key, path: path, ext: ext)
-      t.last_commit = db_commit.key
+      t =  table[key] || table.add(key, repo: db_commit.repo, path: path, ext: ext)
+      t.last_commit = db_commit
 
       detection = CharlockHolmes::EncodingDetector.detect(file.data)
       if detection[:type] == :binary
