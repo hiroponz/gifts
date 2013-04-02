@@ -8,6 +8,7 @@ module Gifts
       Groonga::Schema.define do |schema|
         schema.create_table(table_name, type: :hash) do |table|
           table.string("path")
+          table.string("last_commit_key")
         end
       end
     end
@@ -18,7 +19,11 @@ module Gifts
       git_repo = Grit::Repo.new(path)
       db_repo = table[path] || table.add(path, path: path)
 
-      @db.commits.add(git_repo, db_repo)
+      db_commits = @db.commits.add(git_repo, db_repo)
+
+      # update last commit key
+      db_repo.last_commit_key = db_commits.first.key if db_commits.count > 0
+      pp "add", db_commits.count, db_repo.last_commit_key
 
       db_repo
     end
