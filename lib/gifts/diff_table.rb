@@ -26,7 +26,14 @@ module Gifts
 
             if db_file && db_file.type == FileTable::TypeText
               key = db_commit.id.to_s + ":" + db_file.id.to_s
-              db_diff = table[key] || table.add(key, commit: db_commit.key, file: db_file.key, diff: diff_content(git_diff.diff))
+              db_diff =
+                table[key] ||
+                table.add(
+                  key,
+                  commit: db_commit,
+                  file: db_file,
+                  diff: diff_content(git_diff.diff)
+                )
               result << db_diff
             end
           end
@@ -39,7 +46,9 @@ module Gifts
 
         result
       else
-        records = table.select { |record| record.commit == db_commit }
+        records = table.select do |record|
+          record.commit =~ db_commit
+        end
         (records && records.collect) || []
       end
     end
