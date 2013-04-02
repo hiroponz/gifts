@@ -6,9 +6,10 @@ module Gifts::Grit
     attr_reader :a_mode, :b_mode
     attr_reader :new_file, :deleted_file, :renamed_file
     attr_reader :similarity_index
+    attr_reader :binary_file
     attr_accessor :diff
 
-    def initialize(repo, a_path, b_path, a_blob, b_blob, a_mode, b_mode, new_file, deleted_file, diff, renamed_file = false, similarity_index = 0)
+    def initialize(repo, a_path, b_path, a_blob, b_blob, a_mode, b_mode, new_file, deleted_file, diff, renamed_file = false, similarity_index = 0, binary_file = false)
       @repo   = repo
       @a_path = a_path
       @b_path = b_path
@@ -21,6 +22,7 @@ module Gifts::Grit
       @renamed_file     = renamed_file
       @similarity_index = similarity_index.to_i
       @diff             = diff
+      @binary_file      = binary_file
     end
 
     def self.list_from_string(repo, text, a)
@@ -45,6 +47,7 @@ module Gifts::Grit
         new_file     = false
         deleted_file = false
         renamed_file = false
+        binary_file = false
 
         if lines.first =~ /^new file/
           m, b_mode = lines.shift.match(/^new file mode (.+)$/)
@@ -72,12 +75,19 @@ module Gifts::Grit
 
           diff_lines = []
           while lines.first && lines.first !~ /^diff/
-            diff_lines << lines.shift
+            line = lines.shift
+            diff_lines << line if line !~ /^(-{3}|\+{3})/
           end
-          diff = diff_lines.join("\n")
+
+          if diff =~ /\ABinary/
+            binary_file = true
+            diff = nil
+          else
+            diff = diff_lines.join("\n")
+          end
         end
 
-        diffs << Diff.new(repo, a_path, b_path, a_blob, b_blob, a_mode, b_mode, new_file, deleted_file, diff, renamed_file, sim_index)
+        diffs << Diff.new(repo, a_path, b_path, a_blob, b_blob, a_mode, b_mode, new_file, deleted_file, diff, renamed_file, sim_index, binary_file)
       end
 
       diffs
