@@ -47,9 +47,8 @@ module Gifts
         result
       else
         records = table.select do |record|
-          record.commit =~ db_commit
+          record.commit == db_commit
         end
-        (records && records.collect) || []
       end
     end
   end
