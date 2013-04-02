@@ -23,7 +23,6 @@ module Gifts
 
       # update last commit key
       db_repo.last_commit_key = db_commits.first.key if db_commits.count > 0
-      pp "add", db_commits.count, db_repo.last_commit_key
 
       db_repo
     end
