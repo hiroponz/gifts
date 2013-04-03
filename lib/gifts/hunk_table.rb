@@ -91,7 +91,7 @@ module Gifts
         line_text = item[1]
 
         hunk_key = db_diff.id.to_s + ":" + op_str + line_num.to_s
-        db_hunk = table[hunk_key] || table.add(hunk_key, add: op_bool, line_num: line_num, line_text: line_text)
+        db_hunk = table[hunk_key] || table.add(hunk_key, diff: db_diff, add: op_bool, line_num: line_num, line_text: line_text)
       end
     end
   end
