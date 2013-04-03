@@ -23,7 +23,8 @@ module Gifts
       end
     end
 
-    def add(git_repo, db_repo)
+    def add(git_repo, db_repo, options = {})
+      force = options.delete(:force)
       result = []
 
       offset = 0
@@ -35,7 +36,7 @@ module Gifts
         commits.each do |git_commit|
           key = db_repo.id.to_s + ":" + git_commit.id
 
-          if key == db_repo.last_commit_key
+          if key == db_repo.last_commit_key && !force
             processed_prev_commit = true
             break
 
@@ -53,9 +54,10 @@ module Gifts
                 committed_date: git_commit.committed_date,
                 message: git_commit.message,
                 repo: db_repo,
-                rev: git_commit.id,
-                status: StatusProcessing
+                rev: git_commit.id
               )
+
+              db_commit.status = StatusProcessing
 
               db_diffs = @db.diffs.add(git_commit, db_commit)
               result << db_commit
