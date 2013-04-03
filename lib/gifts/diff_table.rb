@@ -9,7 +9,6 @@ module Gifts
         schema.create_table(table_name, type: :hash) do |table|
           table.reference("commit")
           table.reference("file")
-          table.text("diff")
         end
       end
     end
@@ -31,9 +30,11 @@ module Gifts
                 table.add(
                   key,
                   commit: db_commit,
-                  file: db_file,
-                  diff: git_diff.diff
+                  file: db_file
                 )
+
+              db_hunks = @db.hunks.add(git_diff, db_diff)
+
               result << db_diff
             end
           end
