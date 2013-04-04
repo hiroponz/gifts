@@ -48,6 +48,7 @@ module Gifts
         end
       end
 
+      lines = []
       hunk.each do |key, value|
         value[:add] ||= []
         value[:del] ||= []
@@ -59,9 +60,13 @@ module Gifts
           value[:del].shift
         end
 
-        add_db(db_diff, value, :add)
-        add_db(db_diff, value, :del)
+        lines << ("+" + value[:add].join(",") + " " + key) if value[:add].count > 0
+        lines << ("-" + value[:del].join(",") + " " + key) if value[:del].count > 0
       end
+
+      key = db_diff.id.to_s
+      db_hunk = table[key] || table.add(key, diff: db_diff, line_text: lines.join("\n"))
+      result << db_hunk
 
       result
     end
@@ -78,7 +83,7 @@ module Gifts
       unless key.empty?
         hunk[key] ||= {}
         hunk[key][op] ||= []
-        hunk[key][op] << [pos, line]
+        hunk[key][op] << pos
       end
     end
 
