@@ -34,7 +34,6 @@ module Gifts
       @diffs = DiffTable.new(self)
 
       TermTable.new(self)
-      TermSplitSymbolTable.new(self)
     end
 
     def close

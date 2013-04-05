@@ -10,11 +10,11 @@ module Gifts
           table_name,
           type: :patricia_trie,
           normalizer: :NormalizerAuto,
-          default_tokenizer: "TokenBigram"
+          default_tokenizer: "TokenBigramSplitSymbol"
         ) do |table|
-          table.index("file.ext", with_position: true)
+          table.index("commit.message", with_position: true)
 
-          table.index("user.name", with_position: true)
+          table.index("diff.diff", with_position: true)
         end
       end
     end
