@@ -16,7 +16,7 @@ require "gifts/file_table"
 require "gifts/diff_table"
 require "gifts/user_table"
 require "gifts/term_table"
-require "gifts/term_split_symbol_alpha_table"
+require "gifts/term_split_symbol_table"
 
 module Gifts
   # Your code goes here...

@@ -13,7 +13,6 @@ module Gifts
           default_tokenizer: "TokenBigram"
         ) do |table|
           table.index("file.ext", with_position: true)
-          table.index("file.path", with_position: true)
 
           table.index("user.name", with_position: true)
         end
