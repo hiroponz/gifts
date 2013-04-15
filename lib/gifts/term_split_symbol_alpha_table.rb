@@ -1,7 +1,7 @@
 module Gifts
-  class TermTable < TableBase
+  class TermSplitSymbolAlphaTable < TableBase
     def table_name
-      "term"
+      "term_split_symbol_alpha"
     end
 
     def define_schema
@@ -10,12 +10,11 @@ module Gifts
           table_name,
           type: :patricia_trie,
           normalizer: :NormalizerAuto,
-          default_tokenizer: "TokenBigram"
+          default_tokenizer: "TokenBigramSplitSymbolAlpha"
         ) do |table|
-          table.index("file.ext", with_position: true)
-          table.index("file.path", with_position: true)
+          table.index("commit.message", with_position: true)
 
-          table.index("user.name", with_position: true)
+          table.index("diff.diff", with_position: true)
         end
       end
     end
