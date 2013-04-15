@@ -4,7 +4,7 @@ require 'pp'
 class TestFileIndex < Test::Unit::TestCase
 
   def setup
-    @r = Grit::Repo.new(File.join(File.dirname(__FILE__), *%w[dot_git]), :is_bare => true)
+    @r = Gifts::Grit::Repo.new(File.join(File.dirname(__FILE__), *%w[dot_git]), :is_bare => true)
     @tag = 'f0055fda16c18fd8b27986dbf038c735b82198d7'
   end
 

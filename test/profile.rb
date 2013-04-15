@@ -1,5 +1,5 @@
 require File.join(File.dirname(__FILE__), *%w[.. lib grit])
-include Grit
+include Gifts::Grit
 
 def recurse(tree, indent = "")
   tree.contents.each do |c|

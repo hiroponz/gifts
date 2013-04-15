@@ -66,7 +66,7 @@ committer Linus Torvalds <torvalds@linux-foundation.org> 1337273075 -0700
   end
 
   def test_list_from_string
-    commits = Grit::Commit.list_from_string(nil, @output)
+    commits = Gifts::Grit::Commit.list_from_string(nil, @output)
 
     assert_equal 2, commits.size
     assert_equal "36a1987cd891fa82d9981886c3abbbe82c428c0d", commits.first.id

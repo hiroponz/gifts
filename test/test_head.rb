@@ -9,7 +9,7 @@ class TestHead < Test::Unit::TestCase
 
   def test_inspect
     head = @r.heads[2]
-    assert_equal %Q{#<Grit::Head "test/master">}, head.inspect
+    assert_equal %Q{#<Gifts::Grit::Head "test/master">}, head.inspect
   end
 
   def test_master
@@ -32,7 +32,7 @@ class TestHead < Test::Unit::TestCase
 
   def test_heads_with_slashes
     head = @r.heads[4]
-    assert_equal %Q{#<Grit::Head "test/chacon">}, head.inspect
+    assert_equal %Q{#<Gifts::Grit::Head "test/chacon">}, head.inspect
   end
 
   def test_is_head

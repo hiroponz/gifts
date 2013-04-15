@@ -203,7 +203,7 @@ class TestRubyGit < Test::Unit::TestCase
 =begin
   def test_ls_tree_grit_tree
     paths = ['lib/grit.rb']
-    @repo = Grit::Repo.new('~/projects/github')
+    @repo = Gifts::Grit::Repo.new('~/projects/github')
     paths = ['app/models/event.rb']
     puts out = @repo.git.ls_tree({}, 'master', ['app/models/event.rb'])
     puts out = @repo.tree('master', paths).contents

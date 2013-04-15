@@ -15,7 +15,7 @@ class TestRepo < Test::Unit::TestCase
 
   def test_update_refs_packed
     gpath = create_temp_repo(File.join(File.dirname(__FILE__), *%w[dot_git]))
-    @git = Grit::Repo.new(gpath, :is_bare => true)
+    @git = Gifts::Grit::Repo.new(gpath, :is_bare => true)
 
     # new and existing
     test   = 'ac9a30f5a7f0f163bbe3b6f0abf18a6c83b06872'
@@ -61,7 +61,7 @@ class TestRepo < Test::Unit::TestCase
 
   def test_refs_should_return_array_of_ref_objects
     @r.refs.each do |ref|
-      assert ref.is_a?(Grit::Ref)
+      assert ref.is_a?(Gifts::Grit::Ref)
     end
   end
 
@@ -70,14 +70,14 @@ class TestRepo < Test::Unit::TestCase
   def test_current_head
     @r = Repo.new(File.join(File.dirname(__FILE__), *%w[dot_git]), :is_bare => true)
     head = @r.head
-    assert_equal Grit::Head, head.class
+    assert_equal Gifts::Grit::Head, head.class
     assert_equal 'master', head.name
     assert_equal 'ca8a30f5a7f0f163bbe3b6f0abf18a6c83b0687a', @r.commits(head.name).first.id
   end
 
   def test_heads_should_return_array_of_head_objects
     @r.heads.each do |head|
-      assert_equal Grit::Head, head.class
+      assert_equal Gifts::Grit::Head, head.class
     end
   end
 
@@ -112,7 +112,7 @@ class TestRepo < Test::Unit::TestCase
     assert_equal "Tom Preston-Werner", c.committer.name
     assert_equal "tom@mojombo.com", c.committer.email
     assert_equal Time.at(1191999972), c.committed_date
-    assert_equal "implement Grit#heads", c.message
+    assert_equal "implement Gifts::Grit#heads", c.message
 
     c = commits[1]
     assert_equal [], c.parents
@@ -366,7 +366,7 @@ class TestRepo < Test::Unit::TestCase
   # inspect
 
   def test_inspect
-    assert_equal %Q{#<Grit::Repo "#{File.expand_path(GRIT_REPO)}/.git">}, @r.inspect
+    assert_equal %Q{#<Gifts::Grit::Repo "#{File.expand_path(GRIT_REPO)}/.git">}, @r.inspect
   end
 
   # log

@@ -9,7 +9,7 @@ class TestGitPatching < Test::Unit::TestCase
   end
 
   def teardown
-    Grit.debug = false
+    Gifts::Grit.debug = false
     FileUtils.rm_rf(@clonedir)
   end
 
@@ -24,7 +24,7 @@ class TestGitPatching < Test::Unit::TestCase
   end
 
   def test_applies_patch
-    repo  = Grit::Repo.new(@patchdir, :is_bare => true)
+    repo  = Gifts::Grit::Repo.new(@patchdir, :is_bare => true)
     clone = repo.fork_bare(@clonedir)
     assert_equal 'patchme', (clone.tree / 'patchme').data.strip
 

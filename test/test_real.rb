@@ -8,7 +8,7 @@
 #   end
 #
 #   def test_real
-#     Grit.debug = true
+#     Gifts::Grit.debug = true
 #
 #     index = @repo.index
 #     index.add('foo/bar/baz.txt', 'hello!')

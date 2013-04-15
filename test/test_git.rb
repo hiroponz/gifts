@@ -6,7 +6,7 @@ class TestGit < Test::Unit::TestCase
   end
 
   def teardown
-    Grit.debug = false
+    Gifts::Grit.debug = false
   end
 
   def test_method_missing
@@ -14,16 +14,16 @@ class TestGit < Test::Unit::TestCase
   end
 
   def test_logs_stderr
-    Grit.debug = true
-    Grit.stubs(:log)
-    Grit.expects(:log).with(includes("git: 'bad' is not a git command"))
+    Gifts::Grit.debug = true
+    Gifts::Grit.stubs(:log)
+    Gifts::Grit.expects(:log).with(includes("git: 'bad' is not a git command"))
     @git.bad
   end
 
   def test_logs_stderr_when_skipping_timeout
-    Grit.debug = true
-    Grit.stubs(:log)
-    Grit.expects(:log).with(includes("git: 'bad' is not a git command"))
+    Gifts::Grit.debug = true
+    Gifts::Grit.stubs(:log)
+    Gifts::Grit.expects(:log).with(includes("git: 'bad' is not a git command"))
     @git.bad :timeout => false
   end
 
@@ -50,18 +50,18 @@ class TestGit < Test::Unit::TestCase
 
   def test_raises_if_too_many_bytes
     fail if jruby?
-    assert_raises Grit::Git::GitTimeout do
-      @git.sh "yes | head -#{Grit::Git.git_max_size + 1}"
+    assert_raises Gifts::Grit::Git::GitTimeout do
+      @git.sh "yes | head -#{Gifts::Grit::Git.git_max_size + 1}"
     end
   end
 
   def test_raises_on_slow_shell
-    Grit::Git.git_timeout = 0.0000001
-    assert_raises Grit::Git::GitTimeout do
+    Gifts::Grit::Git.git_timeout = 0.0000001
+    assert_raises Gifts::Grit::Git::GitTimeout do
       @git.version
     end
   ensure
-    Grit::Git.git_timeout = 5.0
+    Gifts::Grit::Git.git_timeout = 5.0
   end
 
   def test_with_timeout_default_parameter
@@ -114,11 +114,11 @@ class TestGit < Test::Unit::TestCase
   def test_passing_env_to_native
     args = [
       { 'A' => 'B' },
-      Grit::Git.git_binary, "--git-dir=#{@git.git_dir}", "help", "-a",
-      {:input => nil, :chdir => nil, :timeout => Grit::Git.git_timeout, :max => Grit::Git.git_max_size}
+      Gifts::Grit::Git.git_binary, "--git-dir=#{@git.git_dir}", "help", "-a",
+      {:input => nil, :chdir => nil, :timeout => Gifts::Grit::Git.git_timeout, :max => Gifts::Grit::Git.git_max_size}
     ]
-    p = Grit::Git::Child.new(*args)
-    Grit::Git::Child.expects(:new).with(*args).returns(p)
+    p = Gifts::Grit::Git::Child.new(*args)
+    Gifts::Grit::Git::Child.expects(:new).with(*args).returns(p)
     @git.native(:help, {:a => true, :env => { 'A' => 'B' }})
   end
 
@@ -136,7 +136,7 @@ class TestGit < Test::Unit::TestCase
   end
 
   def test_raising_exceptions_when_native_git_commands_fail
-    assert_raise Grit::Git::CommandFailed do
+    assert_raise Gifts::Grit::Git::CommandFailed do
       @git.native(:bad, {:raise => true})
     end
   end

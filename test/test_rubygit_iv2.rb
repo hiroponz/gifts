@@ -4,7 +4,7 @@ require 'pp'
 class TestRubyGitIv2 < Test::Unit::TestCase
 
   def setup
-    @git = Grit::Repo.new(File.join(File.dirname(__FILE__), *%w[dot_git_iv2]), :is_bare => true)
+    @git = Gifts::Grit::Repo.new(File.join(File.dirname(__FILE__), *%w[dot_git_iv2]), :is_bare => true)
     @rgit = @git.git.ruby_git
     @commit_sha = 'ca8a30f5a7f0f163bbe3b6f0abf18a6c83b0687a'
     @tree_sha   = 'cd7422af5a2e0fff3e94d6fb1a8fff03b2841881'

@@ -204,7 +204,7 @@ class TestCommit < Test::Unit::TestCase
 
   def test_inspect
     @c = Commit.create(@r, :id => 'abc')
-    assert_equal %Q{#<Grit::Commit "abc">}, @c.inspect
+    assert_equal %Q{#<Gifts::Grit::Commit "abc">}, @c.inspect
   end
 
   # to_hash
@@ -219,7 +219,7 @@ class TestCommit < Test::Unit::TestCase
       'tree' => "672eca9b7f9e09c22dcb128c283e8c3c8d7697a4",
       'authored_date' => date.xmlschema,
       'committer' => {'email' => "tom@mojombo.com", 'name' => "Tom Preston-Werner"},
-      'message' => "implement Grit#heads",
+      'message' => "implement Gifts::Grit#heads",
       'author' => {'email' => "tom@mojombo.com", 'name' => "Tom Preston-Werner"},
       'id' => "4c8124ffcf4039d292442eeccabdeca5af5c5017"
     }

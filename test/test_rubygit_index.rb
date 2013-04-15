@@ -5,7 +5,7 @@ class TestRubyGitIndex < Test::Unit::TestCase
 
   def setup
     @base_repo = create_temp_repo(File.join(File.dirname(__FILE__), *%w[dot_git_iv2]))
-    @git = Grit::Repo.new(@base_repo, :is_bare => true)
+    @git = Gifts::Grit::Repo.new(@base_repo, :is_bare => true)
     @rgit = @git.git.ruby_git
     @user = Actor.from_string("Tom Werner <tom@example.com>")
   end
@@ -59,8 +59,8 @@ class TestRubyGitIndex < Test::Unit::TestCase
   def test_allow_custom_committers_and_authors
     parents = [@git.commits.first]
     sha     = @git.index.commit 'message', 
-                :committer => Grit::Actor.new('abc', nil),
-                :author    => Grit::Actor.new('def', nil),
+                :committer => Gifts::Grit::Actor.new('abc', nil),
+                :author    => Gifts::Grit::Actor.new('def', nil),
                 :parents   => parents, 
                 :head      => 'master'
 

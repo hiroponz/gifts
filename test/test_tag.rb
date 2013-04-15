@@ -104,7 +104,7 @@ class TestTag < Test::Unit::TestCase
   end
 
   def test_parses_tag_object_without_message
-    parsed = Grit::Tag.parse_tag_data(<<-TAG)
+    parsed = Gifts::Grit::Tag.parse_tag_data(<<-TAG)
 object 2695effb5807a22ff3d138d593fd856244e155e7
 type commit
 tag rel-0-1-0
@@ -132,6 +132,6 @@ TAG
   def test_inspect
     tag = @tags['v0.7.0']
 
-    assert_equal %Q{#<Grit::Tag "#{tag.name}">}, tag.inspect
+    assert_equal %Q{#<Gifts::Grit::Tag "#{tag.name}">}, tag.inspect
   end
 end

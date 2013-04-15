@@ -9,7 +9,7 @@ class TestMerge < Test::Unit::TestCase
   end
 
   def test_from_string
-    m = Grit::Merge.new(@merge)
+    m = Gifts::Grit::Merge.new(@merge)
     assert_equal m.sections, 3
     assert_equal m.conflicts, 1
   end

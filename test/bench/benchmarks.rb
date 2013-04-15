@@ -14,12 +14,12 @@ def main
   in_temp_dir do
     #result = RubyProf.profile do
 
-      git = Grit::Repo.new('.')
-      puts Grit::VERSION
-      #Grit::GitRuby.cache_client = MemCache.new 'localhost:11211', :namespace => 'grit'
-      #Grit.debug = true
+      git = Gifts::Grit::Repo.new('.')
+      puts Gifts::Grit::VERSION
+      #Gifts::Grit::GitRuby.cache_client = MemCache.new 'localhost:11211', :namespace => 'grit'
+      #Gifts::Grit.debug = true
     
-      #pp Grit::GitRuby.cache_client.stats 
+      #pp Gifts::Grit::GitRuby.cache_client.stats 
     
       commit1 = '5e3ee1198672257164ce3fe31dea3e40848e68d5'
       commit2 = 'ca8a30f5a7f0f163bbe3b6f0abf18a6c83b0687a'
@@ -123,4 +123,4 @@ end
 
 main()
 
-##pp Grit::GitRuby.cache_client.stats 
+##pp Gifts::Grit::GitRuby.cache_client.stats 
