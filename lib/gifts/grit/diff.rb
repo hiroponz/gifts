@@ -25,7 +25,7 @@ module Gifts::Grit
       @binary_file      = binary_file
     end
 
-    def self.list_from_string(repo, text, a)
+    def self.list_from_string(repo, text)
       lines = text.split("\n")
 
       diffs = []
@@ -64,11 +64,7 @@ module Gifts::Grit
         end
 
         if sim_index == 100
-          ls_tree = repo.git.native(:ls_tree, {}, a, a_path)
-          m = ls_tree.match(/^(\d+) blob ([0-9A-Fa-f]+)/)
-          a_mode = b_mode = m[0]
-          a_blob = b_blob = m[1]
-          diff = nil
+          diff = ""
         else
           m, a_blob, b_blob, b_mode = *lines.shift.match(%r{^index ([0-9A-Fa-f]+)\.\.([0-9A-Fa-f]+) ?(.+)?$})
           b_mode.strip! if b_mode

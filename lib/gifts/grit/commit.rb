@@ -197,14 +197,14 @@ module Gifts::Grit
     def self.diff(repo, a, b = nil, paths = [], options = {})
       if b.is_a?(Array)
         paths = b
-        b     = nil
+        b = nil
       end
       paths.unshift("--") unless paths.empty?
-      paths.unshift(b)    unless b.nil?
+      paths.unshift(b) unless b.nil?
       paths.unshift(a)
-      options = {full_index: true, no_color: true, no_ext_diff: true, M: true}.update(options)
-      text    = repo.git.native(:diff, options, *paths)
-      Diff.list_from_string(repo, text, a)
+      options = {full_index: true}.update(options)
+      text    = repo.git.diff(options, *paths)
+      Diff.list_from_string(repo, text)
     end
 
     def show
@@ -219,7 +219,7 @@ module Gifts::Grit
       else
         diff = ''
       end
-      Diff.list_from_string(@repo, diff, @id)
+      Diff.list_from_string(@repo, diff)
     end
 
     # Shows diffs between the commit's parent and the commit.

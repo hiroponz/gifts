@@ -13,15 +13,6 @@ require 'gifts/grit/git-ruby/internal/pack'
 require 'gifts/grit/git-ruby/internal/loose'
 require 'gifts/grit/git-ruby/git_object'
 
-require 'rubygems'
-require 'diff/lcs'
-require 'diff/lcs/hunk'
-
-# have to do this so it doesn't interfere with Gifts::Grit::Diff
-module Difference
-  include Diff
-end
-
 module Gifts::Grit
   module GitRuby
     class Repository
@@ -390,81 +381,6 @@ module Gifts::Grit
         end
 
         array
-      end
-
-      def diff(commit1, commit2, options = {})
-        patch = ''
-
-        commit_obj1 = get_object_by_sha1(commit1)
-        tree1 = commit_obj1.tree
-        if commit2
-          tree2 = get_object_by_sha1(commit2).tree
-        else
-          tree2 = get_object_by_sha1(commit_obj1.parent.first).tree
-        end
-
-        qdiff = quick_diff(tree1, tree2)
-
-        qdiff.sort.each do |diff_arr|
-          path, status, treeSHA1, treeSHA2 = *diff_arr
-          format, lines, output = :unified, 3, ''
-          file_length_difference = 0
-
-          fileA = treeSHA1 ? cat_file(treeSHA1) : ''
-          fileB = treeSHA2 ? cat_file(treeSHA2) : ''
-
-          sha1 = treeSHA1 || '0000000000000000000000000000000000000000'
-          sha2 = treeSHA2 || '0000000000000000000000000000000000000000'
-
-          data_old = fileA.split(/\n/).map! { |e| e.chomp }
-          data_new = fileB.split(/\n/).map! { |e| e.chomp }
-
-          diffs = Difference::LCS.diff(data_old, data_new)
-          next if diffs.empty?
-
-          a_path = "a/#{path.gsub('./', '')}"
-          b_path = "b/#{path.gsub('./', '')}"
-
-          header = "diff --git #{a_path} #{b_path}"
-          if options[:full_index]
-            header << "\n" + 'index ' + sha1 + '..' + sha2
-            header << ' 100644' if treeSHA2 # hard coding this because i don't think we use it
-          else
-            header << "\n" + 'index ' + sha1[0,7] + '..' + sha2[0,7]
-            header << ' 100644' if treeSHA2 # hard coding this because i don't think we use it
-          end
-          header << "\n--- " + (treeSHA1 ? a_path : '/dev/null')
-          header << "\n+++ " + (treeSHA2 ? b_path : '/dev/null')
-          header += "\n"
-
-          oldhunk = hunk = nil
-
-          diffs.each do |piece|
-            begin
-              hunk = Difference::LCS::Hunk.new(data_old, data_new, piece, lines, file_length_difference)
-              file_length_difference = hunk.file_length_difference
-
-              next unless oldhunk
-
-              if lines > 0 && hunk.overlaps?(oldhunk)
-                hunk.unshift(oldhunk)
-              else
-                output << oldhunk.diff(format)
-              end
-            ensure
-              oldhunk = hunk
-              output << "\n"
-            end
-          end
-
-          output << oldhunk.diff(format)
-          output << "\n"
-
-          patch << header + output.lstrip
-        end
-        patch
-      rescue
-        '' # one of the trees was bad or lcs isn't there - no diff
       end
 
       def quick_what_changed(t1, t2, path, type)

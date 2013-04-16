@@ -1,4 +1,5 @@
-# Gifts
+Gifts [![build status](https://travis-ci.org/hiroponz/gifts.png)](https://travis-ci.org/hiroponz/gifts)
+====
 
 TODO: Write a gem description
 
