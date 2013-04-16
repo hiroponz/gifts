@@ -112,7 +112,7 @@ class TestRepo < Test::Unit::TestCase
     assert_equal "Tom Preston-Werner", c.committer.name
     assert_equal "tom@mojombo.com", c.committer.email
     assert_equal Time.at(1191999972), c.committed_date
-    assert_equal "implement Gifts::Grit#heads", c.message
+    assert_equal "implement Grit#heads", c.message
 
     c = commits[1]
     assert_equal [], c.parents

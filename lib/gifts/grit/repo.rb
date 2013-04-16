@@ -571,7 +571,7 @@ module Gifts::Grit
       else
         diff = ''
       end
-      Diff.list_from_string(self, diff, a)
+      Diff.list_from_string(self, diff)
     end
 
     # The commit diff for the given commit

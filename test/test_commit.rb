@@ -45,7 +45,7 @@ class TestCommit < Test::Unit::TestCase
     assert_equal '100644', diffs.first.b_mode
     assert_equal false, diffs.first.new_file
     assert_equal false, diffs.first.deleted_file
-    assert_equal "--- a/.gitignore\n+++ b/.gitignore\n@@ -1 +1,2 @@\n coverage\n+pkg", diffs.first.diff
+    assert_equal "@@ -1 +1,2 @@\n coverage\n+pkg", diffs.first.diff
 
     assert_equal 'lib/grit/actor.rb', diffs[5].a_path
     assert_equal nil, diffs[5].a_blob
@@ -104,7 +104,7 @@ class TestCommit < Test::Unit::TestCase
     assert_equal '100644', diffs.first.b_mode
     assert_equal false, diffs.first.new_file
     assert_equal false, diffs.first.deleted_file
-    assert_equal "--- a/.gitignore\n+++ b/.gitignore\n@@ -1 +1,2 @@\n coverage\n+pkg", diffs.first.diff
+    assert_equal "@@ -1 +1,2 @@\n coverage\n+pkg", diffs.first.diff
 
     assert_equal 'lib/grit/actor.rb', diffs[5].a_path
     assert_equal nil, diffs[5].a_blob
@@ -128,7 +128,7 @@ class TestCommit < Test::Unit::TestCase
     assert_equal '81d2c27608b352814cbe979a6acd678d30219678', diffs.first.b_blob.id
     assert_equal true, diffs.first.new_file
     assert_equal false, diffs.first.deleted_file
-    assert_equal "--- /dev/null\n+++ b/History.txt\n@@ -0,0 +1,5 @@\n+== 1.0.0 / 2007-10-09\n+\n+* 1 major enhancement\n+  * Birthday!\n+", diffs.first.diff
+    assert_equal "@@ -0,0 +1,5 @@\n+== 1.0.0 / 2007-10-09\n+\n+* 1 major enhancement\n+  * Birthday!\n+", diffs.first.diff
 
 
     assert_equal 'lib/grit.rb', diffs[5].a_path
@@ -187,10 +187,10 @@ class TestCommit < Test::Unit::TestCase
     assert patch.include?('From: tom <tom@taco.(none)>')
     assert patch.include?('Date: Tue, 20 Nov 2007 17:27:42 -0800')
     assert patch.include?('Subject: [PATCH] fix tests on other machines')
-    assert patch.include?('test/test_reality.rb |   30 +++++++++++++++---------------')
+    assert patch.include?('test/test_reality.rb | 30 +++++++++++++++---------------')
     assert patch.include?('@@ -1,17 +1,17 @@')
     assert patch.include?('+#     recurse(t)')
-    assert patch.include?("1.7.")
+    assert patch.match(/1\.[78]\.\d/)
   end
 
   # patch_id
@@ -214,14 +214,14 @@ class TestCommit < Test::Unit::TestCase
     @c = Commit.create(@r, :id => '4c8124ffcf4039d292442eeccabdeca5af5c5017')
     date = Time.parse('Wed Oct 10 03:06:12 -0400 2007')
     expected = {
-      'parents' => ['id' => "634396b2f541a9f2d58b00be1a07f0c358b999b3"],
-      'committed_date' => date.xmlschema,
-      'tree' => "672eca9b7f9e09c22dcb128c283e8c3c8d7697a4",
-      'authored_date' => date.xmlschema,
-      'committer' => {'email' => "tom@mojombo.com", 'name' => "Tom Preston-Werner"},
-      'message' => "implement Gifts::Grit#heads",
-      'author' => {'email' => "tom@mojombo.com", 'name' => "Tom Preston-Werner"},
-      'id' => "4c8124ffcf4039d292442eeccabdeca5af5c5017"
+      "id"=>"4c8124ffcf4039d292442eeccabdeca5af5c5017",
+      "parents"=>[{"id"=>"634396b2f541a9f2d58b00be1a07f0c358b999b3"}],
+      "tree"=>"672eca9b7f9e09c22dcb128c283e8c3c8d7697a4",
+      "message"=>"implement Grit#heads",
+      "author"=>{"name"=>"Tom Preston-Werner", "email"=>"tom@mojombo.com"},
+      "committer"=>{"name"=>"Tom Preston-Werner", "email"=>"tom@mojombo.com"},
+      "authored_date"=>date.xmlschema,
+      "committed_date"=>date.xmlschema
     }
 
     assert_equal expected, @c.to_hash

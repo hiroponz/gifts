@@ -497,11 +497,13 @@ module Gifts::Grit
       args
     end
 
-    def diff(commit1, commit2 = nil, paths = [], options = {})
-      paths.unshift("--") unless paths.empty?
-      paths.unshift(commit2) unless commit2.nil?
-      paths.unshift(commit1)
-      options = {full_index: true, no_color: true, no_ext_diff: true}.update(options)
+    def diff(options, *paths)
+      options = {no_color: true, no_ext_diff: true}.update(options)
+      if paths.size == 1
+        paths << "#{paths[0]}^"
+      elsif paths[1] == "--"
+        paths[1, 0] = "#{paths[0]}^"
+      end
       native(:diff, options, *paths)
     end
   end # Git

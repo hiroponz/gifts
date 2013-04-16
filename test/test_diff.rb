@@ -12,7 +12,7 @@ class TestDiff < Test::Unit::TestCase
 
     diffs = Gifts::Grit::Diff.list_from_string(@r, output)
     assert_equal 2,   diffs.size
-    assert_equal 10,  diffs.first.diff.split("\n").size
+    assert_equal 8,  diffs.first.diff.split("\n").size
     assert_nil        diffs.last.diff
   end
 
