@@ -23,10 +23,10 @@ module Gifts
 
     def add(git_commit, git_diff, db_commit)
       path = git_diff.new_path
-      file = (git_commit.tree / path)
+      file = git_diff.b_blob
       if file.nil? && git_commit.parents.count > 0
         path = git_diff.old_path
-        file = (git_commit.parents.first.tree / path)
+        file = git_diff.a_blob
       end
       return if file.nil?
 
