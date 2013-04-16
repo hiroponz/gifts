@@ -40,7 +40,7 @@ module Gifts::Grit
       end
     end
 
-    undef_method :clone
+    undef_method :clone if method_defined?(:clone)
 
     include GitRuby
 
@@ -495,6 +495,14 @@ module Gifts::Grit
         end
       end
       args
+    end
+
+    def diff(commit1, commit2 = nil, paths = [], options = {})
+      paths.unshift("--") unless paths.empty?
+      paths.unshift(commit2) unless commit2.nil?
+      paths.unshift(commit1)
+      options = {full_index: true, no_color: true, no_ext_diff: true}.update(options)
+      native(:diff, options, *paths)
     end
   end # Git
 

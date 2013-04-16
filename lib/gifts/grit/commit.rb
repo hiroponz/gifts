@@ -197,19 +197,12 @@ module Gifts::Grit
     def self.diff(repo, a, b = nil, paths = [], options = {})
       if b.is_a?(Array)
         paths = b
-        b     = nil
+        b = nil
       end
       if b.nil?
-        commit = repo.commit(a)
-        if commit.parents.count > 0
-          b = commit.parents.first.id
-        end
+        b = repo.commit(a).parents.first.sha
       end
-      paths.unshift("--") unless paths.empty?
-      paths.unshift(b)    unless b.nil?
-      paths.unshift(a)
-      options = {full_index: true, no_color: true, no_ext_diff: true}.update(options)
-      text    = repo.git.native(:diff, options, *paths)
+      text    = repo.git.diff(a, b, paths, options)
       Diff.list_from_string(repo, text, a)
     end
 
