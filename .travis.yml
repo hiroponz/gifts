@@ -1,11 +1,7 @@
-env:
-  - TRAVIS=true
 before_install:
   - sudo apt-get install libicu-dev -y
   - gem install charlock_holmes -v="0.6.9"
-branches:
-  only:
-    - 'master'
+  - curl https://raw.github.com/groonga/groonga/master/data/travis/setup.sh | sh
 rvm:
   - 1.9.3
-script: "bundle exec rake test"
+  - 2.0.0
